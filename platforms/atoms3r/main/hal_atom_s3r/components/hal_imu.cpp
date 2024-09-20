@@ -22,7 +22,7 @@ using namespace SmoothUIToolKit;
 static BMI270_Class* _imu = nullptr;
 static bool _is_bmm150_ok = false;
 
-void HAL_AtomS3R::_imu_init()
+void HAL_AtomS3R::imu_init()
 {
     spdlog::info("imu init");
 
@@ -142,7 +142,7 @@ void HAL_AtomS3R::updateImuDialAngle()
     time_count = millis();
 }
 
-void HAL_AtomS3R::_imu_test()
+void HAL_AtomS3R::imu_test()
 {
     // float ax, ay, az, gx, gy, gz, mx, my, mz;
     int hit = 1;
@@ -158,15 +158,6 @@ void HAL_AtomS3R::_imu_test()
                      getImuData().accelX, getImuData().accelY, getImuData().accelZ, getImuData().gyroX,
                      getImuData().gyroX, getImuData().gyroZ, getImuData().magX, getImuData().magY, getImuData().magZ);
 
-        // _imu->readAcceleration(ax, ay, az);
-        // _imu->readGyroscope(gx, gy, gz);
-        // _imu->readMagneticField(mx, my, mz);
-        // spdlog::info(
-        //     "{} | {:.1f} {:.1f} {:.1f} | {:.1f} {:.1f} {:.1f} | {:.1f} {:.1f} {:.1f}", hit, ax, ay, az, gx, gy, gz,
-        //     mx, my, mz);
-
-        // feedTheDog();
-        // delay(10);
         if (hit == 0) {
             spdlog::info("hit");
             delay(500);
@@ -176,7 +167,7 @@ void HAL_AtomS3R::_imu_test()
 
 #include <ArduinoJson.h>
 
-void HAL_AtomS3R::_imu_keep_sending_data()
+void HAL_AtomS3R::imu_keep_sending_data()
 {
     spdlog::info("start sending imu msg");
 

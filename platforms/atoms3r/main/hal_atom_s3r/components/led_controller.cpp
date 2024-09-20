@@ -15,7 +15,7 @@ LP5562_Class* __get_led_controller()
     return _led_controller;
 }
 
-void HAL_AtomS3R::_led_controller_init()
+void HAL_AtomS3R::led_controller_init()
 {
     spdlog::info("led controller init");
 

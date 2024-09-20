@@ -96,7 +96,7 @@ public:
     }
 };
 
-void HAL_AtomS3R::_disp_init()
+void HAL_AtomS3R::disp_init()
 {
     spdlog::info("display init");
 
@@ -108,7 +108,6 @@ void HAL_AtomS3R::_disp_init()
         // popFatalError("display init failed");
         spdlog::warn("display init failed");
     }
-    // _data.display->setRotation(2);
 
     assert(_data.canvas == nullptr);
     if (_data.display != nullptr) {
@@ -127,8 +126,6 @@ void HAL_AtomS3R::_disp_init()
     } else {
         _data.unit_oled->setRotation(1);
         _data.unit_oled->fillScreen(TFT_WHITE);
-        // _data.unit_oled->setTextColor(TFT_WHITE, TFT_BLACK);
-        // _data.unit_oled->printf("??????2143123");
     }
 
     /* -------------------------------------------------------------------------- */
@@ -137,7 +134,7 @@ void HAL_AtomS3R::_disp_init()
     // _disp_test();
 }
 
-void HAL_AtomS3R::_disp_test()
+void HAL_AtomS3R::disp_test()
 {
     while (1) {
         feedTheDog();

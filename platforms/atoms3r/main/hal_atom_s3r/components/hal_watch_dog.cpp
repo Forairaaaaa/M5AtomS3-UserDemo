@@ -33,7 +33,7 @@ static void _daemon_watch_dog(void* param)
     vTaskDelete(NULL);
 }
 
-void HAL_AtomS3R::_watch_dog_init()
+void HAL_AtomS3R::watch_dog_init()
 {
     spdlog::info("watch dog init");
     xTaskCreate(_daemon_watch_dog, "wd", 2000, NULL, configMAX_PRIORITIES - 1, NULL);

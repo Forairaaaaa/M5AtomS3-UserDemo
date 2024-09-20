@@ -23,7 +23,7 @@ static void _i2c_scan(m5::I2C_Class& i2c_class)
     spdlog::info("device num: {}", device_num);
 }
 
-void HAL_AtomS3R::_i2c_init()
+void HAL_AtomS3R::i2c_init()
 {
     spdlog::info("i2c bus init");
 
