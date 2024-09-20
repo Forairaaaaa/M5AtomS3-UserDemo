@@ -1,0 +1,11 @@
+build
+.cache
+.vscode
+build.clang
+managed_components
+
+/components/arduino-esp32
+/components/M5Unified
+/output
+
+sdkconfig.old
