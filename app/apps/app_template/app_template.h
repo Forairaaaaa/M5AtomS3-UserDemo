@@ -14,16 +14,16 @@ namespace APPS {
  *
  */
 class AppTemplate : public APP_BASE {
+public:
+    void onResume() override;
+    void onRunning() override;
+    void onDestroy() override;
+
 private:
     struct Data_t {
         std::uint32_t time_count = 0;
     };
     Data_t _data;
-
-public:
-    void onResume() override;
-    void onRunning() override;
-    void onDestroy() override;
 };
 
 class AppTemplate_Packer : public APP_PACKER_BASE {

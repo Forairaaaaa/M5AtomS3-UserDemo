@@ -21,6 +21,8 @@
 #include <src/core/lv_obj_tree.h>
 #include <src/display/lv_display.h>
 #include <vector>
+#include <lvgl.h>
+#include <examples/lv_examples.h>
 // https://github.com/m5stack/M5AtomS3-UserDemo/blob/main/src/main.cpp
 
 using namespace MOONCAKE::APPS;
@@ -37,7 +39,7 @@ void AppStartupAnim::onResume()
 void AppStartupAnim::onRunning()
 {
     // _startup_anim();
-    _startup_anim_lvgl();
+    startup_anim_lvgl();
     destroyApp();
 }
 
@@ -46,7 +48,7 @@ void AppStartupAnim::onDestroy()
     spdlog::info("{} onDestroy", getAppName());
 }
 
-void AppStartupAnim::_startup_anim()
+void AppStartupAnim::startup_anim()
 {
     uint32_t circle_color_list[8] = {0xcc3300, 0xff6633, 0xffff66, 0x33cc33, 0x00ffff, 0x0000ff, 0xff3399, 0x990099};
 
@@ -78,12 +80,9 @@ void AppStartupAnim::_startup_anim()
     HAL::Delay(500);
 }
 
-#include <lvgl.h>
-#include <examples/lv_examples.h>
-
 extern lv_image_dsc_t ui_img_logo_r_png;
 
-void AppStartupAnim::_startup_anim_lvgl()
+void AppStartupAnim::startup_anim_lvgl()
 {
     uint32_t circle_color_list[8] = {0xcc3300, 0xff6633, 0xffff66, 0x33cc33, 0x00ffff, 0x0000ff, 0xff3399, 0x990099};
 

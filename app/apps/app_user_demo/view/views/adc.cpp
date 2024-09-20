@@ -25,10 +25,6 @@ void func_adc_t::update(bool btn_click)
     ch1_vol = 0;
     ch2_vol = 0;
     for (size_t i = 0; i < 32; i++) {
-        // TO HAL
-        // ch1_vol += analogRead(1);
-        // ch2_vol += analogRead(2);
-
         ch1_vol += HAL::GetAdcValue(1);
         ch2_vol += HAL::GetAdcValue(2);
     }

@@ -13,14 +13,14 @@ namespace APPS {
  *
  */
 class AppStartupAnim : public APP_BASE {
-private:
-    void _startup_anim();
-    void _startup_anim_lvgl();
-
 public:
     void onResume() override;
     void onRunning() override;
     void onDestroy() override;
+
+private:
+    void startup_anim();
+    void startup_anim_lvgl();
 };
 
 class AppStartupAnim_Packer : public APP_PACKER_BASE {

@@ -17,9 +17,6 @@ void func_wifi_t::start()
     wifi_scan_done  = false;
     _btn_clicked    = false;
 
-    // TO HAL
-    // WiFi.mode(WIFI_MODE_STA);
-    // WiFi.scanNetworks(true);
     HAL::StartWifiScan();
 
     _canvas->setTextWrap(false);
@@ -34,9 +31,6 @@ void func_wifi_t::start()
 void func_wifi_t::update(bool btn_click)
 {
     if (!wifi_scan_done) {
-        // TO HAL
-        // int16_t result = WiFi.scanComplete();
-        // if (result == WIFI_SCAN_RUNNING || result == WIFI_SCAN_FAILED)
         if (!HAL::IsWifiScanFinish()) return;
 
         wifi_scan_done  = true;
@@ -51,10 +45,6 @@ void func_wifi_t::update(bool btn_click)
         if (!_btn_clicked) {
             if (HAL::Millis() - last_time_show > 500) {
                 if (wifi_show_index < (wifi_scan_count < 5 ? wifi_scan_count : 5)) {
-                    // TO HAL
-                    // _canvas->printf(
-                    //     "%d. %s %d\r\n", wifi_show_index + 1, WiFi.SSID(wifi_show_index).c_str(),
-                    //     WiFi.RSSI(wifi_show_index));
                     _canvas->printf("%d. %s %d\r\n", wifi_show_index + 1,
                                     (*HAL::GetWifiScanResult())[wifi_show_index].ssid.c_str(),
                                     (*HAL::GetWifiScanResult())[wifi_show_index].rssi);
@@ -77,8 +67,6 @@ void func_wifi_t::update(bool btn_click)
 
 void func_wifi_t::stop()
 {
-    // TO HAL
-    // WiFi.scanDelete();
     HAL::FreeWifiScanResult();
 
     _canvas->setFont(&fonts::Font0);

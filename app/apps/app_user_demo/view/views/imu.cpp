@@ -27,8 +27,6 @@ void func_imu_t::start()
 {
     spdlog::info("start imu demo");
 
-    // HAL::StartImuMagCalibration();
-
     // Clear
     lv_obj_clean(lv_screen_active());
 
@@ -75,9 +73,6 @@ void func_imu_t::start()
     lv_obj_set_height(img_buffer, LV_SIZE_CONTENT);
     lv_obj_add_flag(img_buffer, LV_OBJ_FLAG_ADV_HITTEST);
     lv_obj_remove_flag(img_buffer, LV_OBJ_FLAG_SCROLLABLE);
-
-    // _tilt_ball_transition.setDuration(20);
-    // _dial_transition.setDuration(20);
 }
 
 void func_imu_t::update(bool btn_click)
@@ -92,20 +87,6 @@ void func_imu_t::update(bool btn_click)
                  HAL::GetImuData().tiltBallOffsetY);
     // Dial
     lv_image_set_rotation(_lv_img_dial, HAL::GetImuData().dialAngle);
-
-    // /* ----------------------------- With transition ---------------------------- */
-    // _tilt_ball_transition.moveTo(HAL::GetImuData().tiltBallOffsetX, HAL::GetImuData().tiltBallOffsetY);
-    // _dial_transition.moveTo(HAL::GetImuData().dialAngle, 0);
-    // _tilt_ball_transition.update(HAL::Millis());
-    // _dial_transition.update(HAL::Millis());
-
-    // // Tilt ball
-    // lv_obj_align(_lv_img_tilt_ball,
-    //              LV_ALIGN_CENTER,
-    //              _tilt_ball_transition.getXTransition().getValue(),
-    //              _tilt_ball_transition.getYTransition().getValue());
-    // // Dial
-    // lv_image_set_rotation(_lv_img_dial, _dial_transition.getXTransition().getValue());
 
     // Update and render
     HAL::LvglTimerHandler();

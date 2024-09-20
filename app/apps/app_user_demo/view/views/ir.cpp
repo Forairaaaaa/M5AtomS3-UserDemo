@@ -32,14 +32,6 @@ void func_ir_t::update(bool btn_click)
 
     // USB => IR
     if (ir_send_mode_index == 0) {
-        // TO HAL
-        // if (USBSerial.available())
-        // {
-        //     uint8_t c = USBSerial.read();
-        //     ir_tx_send((uint32_t)c);
-        //     drawIrData((uint32_t)c);
-        // }
-
         uint8_t cmd = 0;
         if (HAL::GetIrCmdFromSerial(cmd)) {
             HAL::IrSendCmd(cmd);

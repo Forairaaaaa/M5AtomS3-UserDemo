@@ -18,6 +18,11 @@ namespace APPS {
  *
  */
 class AppUserDemo : public APP_BASE {
+public:
+    void onResume() override;
+    void onRunning() override;
+    void onDestroy() override;
+
 private:
     struct Data_t {
         std::vector<uint8_t*> func_img_list;
@@ -26,11 +31,6 @@ private:
         bool is_entry_func            = false;
     };
     Data_t _data;
-
-public:
-    void onResume() override;
-    void onRunning() override;
-    void onDestroy() override;
 };
 
 class AppUserDemo_Packer : public APP_PACKER_BASE {

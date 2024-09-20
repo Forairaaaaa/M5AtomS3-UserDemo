@@ -14,9 +14,6 @@ using namespace VIEW;
 
 void func_i2c_t::start()
 {
-    // TO HAL
-    // Wire.begin(2, 1);
-
     _canvas->setTextWrap(false);
     _canvas->setTextScroll(true);
     _canvas->clear(TFT_BLACK);
@@ -46,23 +43,6 @@ void func_i2c_t::update(bool btn_click)
         uint8_t address = 0;
         device_count    = 0;
         memset(addr_list, 0, sizeof(addr_list));
-
-        // for (address = 1; address < 127; address++)
-        // {
-        //     // TO HAL
-        //     // Wire.beginTransmission(address);
-        //     // uint8_t error = Wire.endTransmission();
-        //     // if (error == 0)
-        //     // {
-        //     //     addr_list[device_count] = address;
-        //     //     device_count++;
-
-        //     //     if (device_count > 5)
-        //     //     {
-        //     //         break;
-        //     //     }
-        //     // }
-        // }
 
         HAL::StartI2CScan();
         device_count = HAL::GetI2cScanResult()->size();
@@ -96,8 +76,6 @@ void func_i2c_t::update(bool btn_click)
 
 void func_i2c_t::stop()
 {
-    // TO HAL
-    // Wire.end();
     HAL::FreeI2cScanResult();
     _canvas->setTextColor(TFT_WHITE);
 }

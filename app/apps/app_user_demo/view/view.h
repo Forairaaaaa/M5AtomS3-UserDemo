@@ -158,9 +158,6 @@ class func_ir_t : public func_base_t {
 };
 
 class func_imu_t : public func_base_t {
-    // SmoothUIToolKit::Transition2D _tilt_ball_transition;
-    // SmoothUIToolKit::Transition2D _dial_transition;
-
     void start() override;
     void update(bool btn_click) override;
     void stop() override;

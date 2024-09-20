@@ -16,14 +16,6 @@ void func_pwm_t::start()
     HAL::GetDisplay()->setFont(&fonts::efontCN_16_b);
     HAL::GetDisplay()->drawCenterString("F: 1Khz", 90, 52);
 
-    // TO HAL
-    // ledcSetup(0, 1000, 8);
-    // ledcSetup(1, 1000, 8);
-    // ledcAttachPin(1, 0);
-    // ledcAttachPin(2, 1);
-    // ledcWrite(0, pwm_duty);
-    // ledcWrite(1, pwm_duty);
-
     HAL::StartPwm();
     HAL::ChangePwmDuty(pwm_duty);
 
@@ -45,47 +37,16 @@ void func_pwm_t::update(bool btn_click)
             pwm_duty = 0xF;
         }
 
-        // TO HAL
-        // ledcWrite(0, pwm_duty);
-        // ledcWrite(1, pwm_duty);
         HAL::ChangePwmDuty(pwm_duty);
 
         drawDuty(pwm_duty);
 
         HAL::Delay(10);
     }
-
-    // if (USBSerial.available())
-    // {
-    //     pwm_duty = (uint8_t)USBSerial.read();
-    //     if (pwm_mode_index <= 1)
-    //     {
-    //         ledcWrite(0, pwm_duty);
-    //         ledcWrite(1, pwm_duty);
-    //     }
-
-    //     if (pwm_mode_index == 2)
-    //     {
-    //         ledcWrite(1, 0);
-    //         ledcWrite(0, pwm_duty);
-    //     }
-
-    //     if (pwm_mode_index == 3)
-    //     {
-    //         ledcWrite(1, pwm_duty);
-    //         ledcWrite(0, 0);
-    //     }
-    //     drawDuty(pwm_duty);
-    // }
 }
 
 void func_pwm_t::stop()
 {
-    // TO HAL
-    // ledcDetachPin(1);
-    // ledcDetachPin(2);
-    // gpio_reset_pin((gpio_num_t)1);
-    // gpio_reset_pin((gpio_num_t)2);
     HAL::StopPwm();
 }
 
