@@ -16,12 +16,12 @@
     },
     {
         "url": "https://github.com/m5stack/M5Unified.git",
-        "path": "platforms/atoms3r/components/M5Unified",
+        "path": "dependencies/M5Unified",
         "branch": "0.1.16"
     },
     {
         "url": "https://github.com/Forairaaaaa/arduino_lite.git",
-        "path": "platforms/atoms3r/components/arduino-esp32",
+        "path": "dependencies/arduino-esp32",
         "branch": "v3.0.2"
     },
     {
@@ -33,5 +33,10 @@
         "url": "https://github.com/bblanchon/ArduinoJson.git",
         "path": "dependencies/ArduinoJson",
         "branch": "v7.1.0"
+    },
+    {
+        "url": "https://github.com/hathach/tinyusb.git",
+        "path": "dependencies/arduino_tinyusb/tinyusb",
+        "branch": "0.17.0"
     }
 ]

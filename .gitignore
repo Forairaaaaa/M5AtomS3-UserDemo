@@ -1,3 +1,10 @@
 .cache
 build
-dependencies
+dependencies/arduino_tinyusb/tinyusb
+dependencies/arduino-esp32
+dependencies/ArduinoJson
+dependencies/lvgl
+dependencies/M5GFX
+dependencies/M5Unified
+dependencies/mooncake
+dependencies/smooth_ui_toolkit

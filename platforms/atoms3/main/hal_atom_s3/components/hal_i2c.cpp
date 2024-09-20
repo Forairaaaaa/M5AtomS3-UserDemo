@@ -9,6 +9,7 @@
 #include <mooncake.h>
 #include <utility/I2C_Class.hpp>
 
+
 static void _i2c_scan(m5::I2C_Class& i2c_class)
 {
     spdlog::info("start scan:");
