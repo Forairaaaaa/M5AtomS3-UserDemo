@@ -8,7 +8,7 @@
 #include <mooncake.h>
 #include <driver/gpio.h>
 
-void HAL_AtomS3::_gamepad_init()
+void HAL_AtomS3::gamepad_init()
 {
     spdlog::info("gamepad init");
 

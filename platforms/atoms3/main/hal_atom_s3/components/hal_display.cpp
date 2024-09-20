@@ -78,7 +78,7 @@ public:
     }
 };
 
-void HAL_AtomS3::_disp_init()
+void HAL_AtomS3::disp_init()
 {
     spdlog::info("display init");
 
@@ -103,30 +103,13 @@ void HAL_AtomS3::_disp_init()
     /* -------------------------------------------------------------------------- */
     /*                                    Test                                    */
     /* -------------------------------------------------------------------------- */
-    // _disp_test();
+    // disp_test();
 }
 
-void HAL_AtomS3::_disp_test()
+void HAL_AtomS3::disp_test()
 {
     while (1) {
         feedTheDog();
-
-        // spdlog::info("rrr");
-        // _data.display->fillScreen(TFT_RED);
-        // delay(500);
-
-        // spdlog::info("ggg");
-        // _data.display->fillScreen(TFT_GREEN);
-        // delay(500);
-
-        // spdlog::info("bbb");
-        // _data.display->fillScreen(TFT_BLUE);
-        // delay(500);
-
-        // spdlog::info("fff");
-        // _data.display->fillScreen(TFT_WHITE);
-        // _data.display->drawRect(0, 0, _data.display->width(), _data.display->height(), TFT_RED);
-        // delay(3000);
 
         spdlog::info("rrr");
         _data.canvas->fillScreen(TFT_RED);

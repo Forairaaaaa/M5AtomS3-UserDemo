@@ -22,7 +22,7 @@ using namespace SmoothUIToolKit;
 static m5::MPU6886_Class* _imu = nullptr;
 static bool _is_bmm150_ok      = false;
 
-void HAL_AtomS3::_imu_init()
+void HAL_AtomS3::imu_init()
 {
     spdlog::info("imu init");
 
@@ -49,11 +49,6 @@ void HAL_AtomS3::updateImuData()
     static m5::IMU_Base::imu_raw_data_t raw_data;
 
     _imu->getImuRawData(&raw_data);
-
-    // // _imu->readAcceleration(_data.imu_data.accelX, _data.imu_data.accelY, _data.imu_data.accelZ);
-    // _imu->readAcceleration(_data.imu_data.accelY, _data.imu_data.accelX, _data.imu_data.accelZ);
-    // _imu->readGyroscope(_data.imu_data.gyroX, _data.imu_data.gyroY, _data.imu_data.gyroZ);
-    // _imu->readMagneticField(_data.imu_data.magX, _data.imu_data.magY, _data.imu_data.magZ);
 
     static float resolution1 = (8.0f / 32768.0f) * (1.0f / 65536.0f);
     _data.imu_data.accelX    = ((int32_t)raw_data.accel.x << 16) * resolution1;
@@ -128,7 +123,7 @@ void HAL_AtomS3::updateImuDialAngle()
     time_count = millis();
 }
 
-void HAL_AtomS3::_imu_test()
+void HAL_AtomS3::imu_test()
 {
     // float ax, ay, az, gx, gy, gz, mx, my, mz;
     int hit = 1;
@@ -138,32 +133,16 @@ void HAL_AtomS3::_imu_test()
         delay(20);
 
         // hit = gpio_get_level((gpio_num_t)HAL_PIN_IMU_INT);
-
         updateImuData();
         spdlog::info("{} | {:.1f} {:.1f} {:.1f} | {:.1f} {:.1f} {:.1f} | {:.1f} {:.1f} {:.1f}", hit,
                      getImuData().accelX, getImuData().accelY, getImuData().accelZ, getImuData().gyroX,
                      getImuData().gyroX, getImuData().gyroZ, getImuData().magX, getImuData().magY, getImuData().magZ);
-
-        // _imu->readAcceleration(ax, ay, az);
-        // _imu->readGyroscope(gx, gy, gz);
-        // _imu->readMagneticField(mx, my, mz);
-        // spdlog::info(
-        //     "{} | {:.1f} {:.1f} {:.1f} | {:.1f} {:.1f} {:.1f} | {:.1f} {:.1f} {:.1f}", hit, ax, ay, az, gx, gy, gz,
-        //     mx, my, mz);
-
-        // // feedTheDog();
-        // // delay(10);
-        // if (hit == 0)
-        // {
-        //     spdlog::info("hit");
-        //     delay(500);
-        // }
     }
 }
 
 #include <ArduinoJson.h>
 
-void HAL_AtomS3::_imu_keep_sending_data()
+void HAL_AtomS3::imu_keep_sending_data()
 {
     spdlog::info("start sending imu msg");
 

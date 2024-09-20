@@ -10,7 +10,7 @@
 #include <utility/I2C_Class.hpp>
 
 
-static void _i2c_scan(m5::I2C_Class& i2c_class)
+static void i2c_scan(m5::I2C_Class& i2c_class)
 {
     spdlog::info("start scan:");
     bool scan_list[120];
@@ -25,7 +25,7 @@ static void _i2c_scan(m5::I2C_Class& i2c_class)
     spdlog::info("device num: {}", device_num);
 }
 
-void HAL_AtomS3::_i2c_init()
+void HAL_AtomS3::i2c_init()
 {
     spdlog::info("i2c bus init");
 
@@ -38,14 +38,6 @@ void HAL_AtomS3::_i2c_init()
     spdlog::info("external bus:");
     m5::Ex_I2C.begin(I2C_NUM_1, HAL_PIN_I2C_EXTER_SDA, HAL_PIN_I2C_EXTER_SCL);
     // _i2c_scan(m5::Ex_I2C);
-
-    // /* -------------------------------------------------------------------------- */
-    // /*                                    Test                                    */
-    // /* -------------------------------------------------------------------------- */
-    // while (1)
-    // {
-    //     delay(1000);
-    // }
 }
 
 static std::vector<uint8_t>* _i2c_scan_result = nullptr;

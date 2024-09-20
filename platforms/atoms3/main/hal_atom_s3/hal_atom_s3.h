@@ -7,17 +7,6 @@
 #include <Arduino.h>
 
 class HAL_AtomS3 : public HAL {
-private:
-    void _watch_dog_init();
-    void _disp_init();
-    void _disp_test();
-    void _i2c_init();
-    void _gamepad_init();
-    void _imu_init();
-    void _imu_test();
-    void _imu_keep_sending_data();
-    void _ir_init();
-
 public:
     std::string type() override
     {
@@ -26,11 +15,11 @@ public:
 
     inline void init() override
     {
-        _watch_dog_init();
-        _i2c_init();
-        _disp_init();
-        _imu_init();
-        _ir_init();
+        watch_dog_init();
+        i2c_init();
+        disp_init();
+        imu_init();
+        ir_init();
 
         initArduino();
     }
@@ -71,4 +60,15 @@ public:
     int getAdcValue(uint8_t port) override;
 
     bool irSendCmd(uint8_t cmd) override;
+
+private:
+    void watch_dog_init();
+    void disp_init();
+    void disp_test();
+    void i2c_init();
+    void gamepad_init();
+    void imu_init();
+    void imu_test();
+    void imu_keep_sending_data();
+    void ir_init();
 };

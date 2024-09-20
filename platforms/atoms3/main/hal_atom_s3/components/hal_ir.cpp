@@ -10,7 +10,7 @@ extern "C" {
 #include "../utils/ir_nec_transceiver/ir_nec_transceiver.h"
 }
 
-void HAL_AtomS3::_ir_init()
+void HAL_AtomS3::ir_init()
 {
     spdlog::info("ir init");
 
