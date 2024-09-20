@@ -74,8 +74,7 @@ void HAL_AtomS3::updateImuData()
     _data.imu_data.gyroZ = ((int32_t)raw_data.gyro.z << 16) * resolution2;
 
     // Reverse
-    _data.imu_data.magX = -_data.imu_data.magX;
-    _data.imu_data.magZ = -_data.imu_data.magZ;
+    _data.imu_data.accelY = -_data.imu_data.accelY;
 }
 
 bool HAL_AtomS3::getImuInterruptState() { return gpio_get_level((gpio_num_t)HAL_PIN_IMU_INT) == 0; }

@@ -99,13 +99,14 @@ void HAL_AtomS3::_disp_init()
     }
     // _data.display->setRotation(2);
 
-    // assert(_data.canvas == nullptr);
-    // if (_data.display != nullptr)
-    // {
-    //     _data.display->setBrightness(255);
-    //     _data.canvas = new LGFX_SpriteFx(_data.display);
-    //     _data.canvas->createSprite(_data.display->width(), _data.display->height());
-    // }
+    assert(_data.canvas == nullptr);
+    if (_data.display != nullptr)
+    {
+        _data.display->setBrightness(255);
+        _data.canvas = new LGFX_SpriteFx(_data.display);
+        auto ret = _data.canvas->createSprite(_data.display->width(), _data.display->height());
+        spdlog::info("create canvas: {}", ret);
+    }
 
     /* -------------------------------------------------------------------------- */
     /*                                    Test                                    */
@@ -138,17 +139,17 @@ void HAL_AtomS3::_disp_test()
 
         spdlog::info("rrr");
         _data.canvas->fillScreen(TFT_RED);
-        canvasUpdate();
+        _data.canvas->pushSprite(0, 0);
         delay(500);
 
         spdlog::info("ggg");
         _data.canvas->fillScreen(TFT_GREEN);
-        canvasUpdate();
+        _data.canvas->pushSprite(0, 0);
         delay(500);
 
         spdlog::info("bbb");
         _data.canvas->fillScreen(TFT_BLUE);
-        canvasUpdate();
+        _data.canvas->pushSprite(0, 0);
         delay(500);
     }
 }

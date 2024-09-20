@@ -10,7 +10,6 @@
  */
 #include "../hal_atom_s3.h"
 #include "../hal_config.h"
-#include <cstdlib>
 #include <mooncake.h>
 #include "spdlog/spdlog.h"
 #include <lvgl.h>
@@ -41,12 +40,12 @@ bool HAL_AtomS3::lvglInit()
     lv_tick_set_cb(_lvgl_tick_cb);
 
     // Display
-    void* buffer = NULL;
-    buffer = malloc(128 * 128 * 2);
-    assert(buffer != NULL);
-
-    lv_display_t* display = lv_display_create(128, 128);
-    lv_display_set_buffers(display, buffer, NULL, sizeof(uint16_t) * 128 * 128, LV_DISPLAY_RENDER_MODE_FULL);
+    lv_display_t* display = lv_display_create(_data.canvas->width(), _data.canvas->height());
+    lv_display_set_buffers(display,
+                           _data.canvas->getBuffer(),
+                           NULL,
+                           sizeof(uint16_t) * _data.canvas->width() * _data.canvas->height(),
+                           LV_DISPLAY_RENDER_MODE_FULL);
     lv_display_set_flush_cb(display, _lvgl_disp_flush);
 
     return true;
