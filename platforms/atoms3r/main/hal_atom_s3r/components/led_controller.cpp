@@ -1,12 +1,7 @@
-/**
- * @file led_controller.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-07-30
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "../hal_atom_s3r.h"
 #include "../hal_config.h"
@@ -15,7 +10,10 @@
 #include "spdlog/spdlog.h"
 
 static LP5562_Class* _led_controller = nullptr;
-LP5562_Class* __get_led_controller() { return _led_controller; }
+LP5562_Class* __get_led_controller()
+{
+    return _led_controller;
+}
 
 void HAL_AtomS3R::_led_controller_init()
 {
@@ -23,24 +21,20 @@ void HAL_AtomS3R::_led_controller_init()
 
     assert(_led_controller == nullptr);
     _led_controller = new LP5562_Class;
-    if (!_led_controller->begin())
-    {
+    if (!_led_controller->begin()) {
         delete _led_controller;
         _led_controller = nullptr;
         // popFatalError("rgb controller init failed");
         spdlog::warn("rgb controller init failed");
-    }
-    else
-    {
+    } else {
         spdlog::info("ok");
     }
 
-    if (_led_controller == nullptr)
-        return;
+    if (_led_controller == nullptr) return;
 
     // PWM clock frequency 558 Hz
     auto data = _led_controller->readRegister8(0x08);
-    data = data | 0B01000000;
+    data      = data | 0B01000000;
     // data = data & 0B10111111;
     _led_controller->writeRegister8(0x08, data);
 
@@ -65,4 +59,7 @@ void HAL_AtomS3R::_led_controller_init()
     // }
 }
 
-bool HAL_AtomS3R::isLedControllerAvailable() { return _led_controller != nullptr; }
+bool HAL_AtomS3R::isLedControllerAvailable()
+{
+    return _led_controller != nullptr;
+}

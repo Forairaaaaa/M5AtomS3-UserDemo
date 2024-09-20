@@ -1,12 +1,7 @@
-/**
- * @file hal_config.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-06-26
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #pragma once
 
@@ -19,11 +14,11 @@
 #define HAL_PIN_LCD_MOSI 21
 #define HAL_PIN_LCD_MISO -1
 #define HAL_PIN_LCD_SCLK 15
-#define HAL_PIN_LCD_DC 42
-#define HAL_PIN_LCD_CS 14
-#define HAL_PIN_LCD_RST 48
+#define HAL_PIN_LCD_DC   42
+#define HAL_PIN_LCD_CS   14
+#define HAL_PIN_LCD_RST  48
 #define HAL_PIN_LCD_BUSY -1
-#define HAL_PIN_LCD_BL -1
+#define HAL_PIN_LCD_BL   -1
 
 // I2C
 #define HAL_PIN_I2C_INTER_SDA 45

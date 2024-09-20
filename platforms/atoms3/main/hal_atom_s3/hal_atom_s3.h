@@ -1,18 +1,12 @@
-/**
- * @file hal_atom_s3.h
- * @author Forairaaaaa
- * @brief 
- * @version 0.1
- * @date 2024-09-20
- * 
- * @copyright Copyright (c) 2024
- * 
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
  */
 #include <hal/hal.h>
 #include <Arduino.h>
 
-class HAL_AtomS3 : public HAL
-{
+class HAL_AtomS3 : public HAL {
 private:
     void _watch_dog_init();
     void _disp_init();
@@ -25,7 +19,10 @@ private:
     void _ir_init();
 
 public:
-    std::string type() override { return "AtomS3"; }
+    std::string type() override
+    {
+        return "AtomS3";
+    }
 
     inline void init() override
     {
@@ -63,7 +60,8 @@ public:
     void freeI2cScanResult() override;
 
     void startUartPassThrough(uint32_t baudrate, int pinRx, int pinTx) override;
-    void updateUartPassThrough(std::function<void(uint8_t)> onGrove2Usb, std::function<void(uint8_t)> onUsb2Grove) override;
+    void updateUartPassThrough(std::function<void(uint8_t)> onGrove2Usb,
+                               std::function<void(uint8_t)> onUsb2Grove) override;
     void stopUartPassThrough() override;
 
     void startPwm() override;

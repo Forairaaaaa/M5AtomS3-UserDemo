@@ -1,12 +1,7 @@
-/**
- * @file hal_imu.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-07-30
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "../hal_atom_s3r.h"
 #include "../hal_config.h"
@@ -33,43 +28,33 @@ void HAL_AtomS3R::_imu_init()
 
     assert(_imu == nullptr);
     _imu = new BMI270_Class();
-    if (!_imu->init())
-    {
+    if (!_imu->init()) {
         delete _imu;
         _imu = nullptr;
         // popFatalError("imu init failed");
         spdlog::warn("bmi270 init failed");
-    }
-    else
-    {
+    } else {
         spdlog::info("bmi270 init ok");
     }
 
-    if (!_imu->initAuxBmm150())
-    {
+    if (!_imu->initAuxBmm150()) {
         delete _imu;
         _imu = nullptr;
         // popFatalError("imu init bmm150 failed");
         _is_bmm150_ok = false;
         spdlog::warn("bmm150 init failed");
-    }
-    else
-    {
+    } else {
         _is_bmm150_ok = true;
         spdlog::info("bmm150 init ok");
     }
 
     // Interrupt
-    if (_imu != nullptr)
-    {
+    if (_imu != nullptr) {
         // _imu->setWristWearWakeup();
-        if (!_imu->enableAnyMotionInterrupt())
-        {
+        if (!_imu->enableAnyMotionInterrupt()) {
             // popFatalError("imu enable any motion intterrupt failed");
             spdlog::warn("imu enable any motion intterrupt failed");
-        }
-        else
-        {
+        } else {
             spdlog::info(" enable any motion intterrupt");
         }
 
@@ -98,41 +83,54 @@ void HAL_AtomS3R::updateImuData()
     _data.imu_data.magZ = -_data.imu_data.magZ;
 }
 
-bool HAL_AtomS3R::getImuInterruptState() { return gpio_get_level((gpio_num_t)HAL_PIN_IMU_INT) == 0; }
+bool HAL_AtomS3R::getImuInterruptState()
+{
+    return gpio_get_level((gpio_num_t)HAL_PIN_IMU_INT) == 0;
+}
 
-bool HAL_AtomS3R::isImuAvailable() { return _imu != nullptr; }
+bool HAL_AtomS3R::isImuAvailable()
+{
+    return _imu != nullptr;
+}
 
-bool HAL_AtomS3R::isImuMagAvailable() { return _is_bmm150_ok; }
+bool HAL_AtomS3R::isImuMagAvailable()
+{
+    return _is_bmm150_ok;
+}
 
 void HAL_AtomS3R::updateImuTiltBallOffset()
 {
     // spdlog::info("{} {} {}", _data.imu_data.accelX, _data.imu_data.accelY, _data.imu_data.accelZ);
 
-    static float value_limit = 0.7;
-    static int offset_limit = 12;
+    static float value_limit        = 0.7;
+    static int offset_limit         = 12;
     static float tilt_offset_factor = (float)offset_limit / value_limit;
 
     _data.imu_data.tiltBallOffsetX = _data.imu_data.accelX * tilt_offset_factor;
     _data.imu_data.tiltBallOffsetY = _data.imu_data.accelY * tilt_offset_factor;
 
     // Limit
-    _data.imu_data.tiltBallOffsetX = SmoothUIToolKit::Clamp(_data.imu_data.tiltBallOffsetX, {-offset_limit, offset_limit});
-    _data.imu_data.tiltBallOffsetY = SmoothUIToolKit::Clamp(_data.imu_data.tiltBallOffsetY, {-offset_limit, offset_limit});
+    _data.imu_data.tiltBallOffsetX =
+        SmoothUIToolKit::Clamp(_data.imu_data.tiltBallOffsetX, {-offset_limit, offset_limit});
+    _data.imu_data.tiltBallOffsetY =
+        SmoothUIToolKit::Clamp(_data.imu_data.tiltBallOffsetY, {-offset_limit, offset_limit});
 
     // spdlog::info("{} {}", _data.imu_data.tiltBallOffsetX, _data.imu_data.tiltBallOffsetY);
 }
 
-static void _calculate_attitude_yaw(float gyroZ, float deltaTime, float& yaw) { yaw += gyroZ * deltaTime; }
+static void _calculate_attitude_yaw(float gyroZ, float deltaTime, float& yaw)
+{
+    yaw += gyroZ * deltaTime;
+}
 
 void HAL_AtomS3R::updateImuDialAngle()
 {
     static uint32_t time_count = millis();
-    static float yaw = 0.0f;
+    static float yaw           = 0.0f;
 
-    if (millis() - time_count > 200)
-    {
+    if (millis() - time_count > 200) {
         time_count = millis();
-        yaw = 0.0f;
+        yaw        = 0.0f;
         return;
     }
 
@@ -148,8 +146,7 @@ void HAL_AtomS3R::_imu_test()
 {
     // float ax, ay, az, gx, gy, gz, mx, my, mz;
     int hit = 1;
-    while (1)
-    {
+    while (1) {
         feedTheDog();
         // delay(100);
         delay(20);
@@ -157,29 +154,20 @@ void HAL_AtomS3R::_imu_test()
         hit = gpio_get_level((gpio_num_t)HAL_PIN_IMU_INT);
 
         updateImuData();
-        spdlog::info("{} | {:.1f} {:.1f} {:.1f} | {:.1f} {:.1f} {:.1f} | {:.1f} {:.1f} {:.1f}",
-                     hit,
-                     getImuData().accelX,
-                     getImuData().accelY,
-                     getImuData().accelZ,
-                     getImuData().gyroX,
-                     getImuData().gyroX,
-                     getImuData().gyroZ,
-                     getImuData().magX,
-                     getImuData().magY,
-                     getImuData().magZ);
+        spdlog::info("{} | {:.1f} {:.1f} {:.1f} | {:.1f} {:.1f} {:.1f} | {:.1f} {:.1f} {:.1f}", hit,
+                     getImuData().accelX, getImuData().accelY, getImuData().accelZ, getImuData().gyroX,
+                     getImuData().gyroX, getImuData().gyroZ, getImuData().magX, getImuData().magY, getImuData().magZ);
 
         // _imu->readAcceleration(ax, ay, az);
         // _imu->readGyroscope(gx, gy, gz);
         // _imu->readMagneticField(mx, my, mz);
         // spdlog::info(
-        //     "{} | {:.1f} {:.1f} {:.1f} | {:.1f} {:.1f} {:.1f} | {:.1f} {:.1f} {:.1f}", hit, ax, ay, az, gx, gy, gz, mx, my,
-        //     mz);
+        //     "{} | {:.1f} {:.1f} {:.1f} | {:.1f} {:.1f} {:.1f} | {:.1f} {:.1f} {:.1f}", hit, ax, ay, az, gx, gy, gz,
+        //     mx, my, mz);
 
         // feedTheDog();
         // delay(10);
-        if (hit == 0)
-        {
+        if (hit == 0) {
             spdlog::info("hit");
             delay(500);
         }
@@ -195,8 +183,7 @@ void HAL_AtomS3R::_imu_keep_sending_data()
     JsonDocument doc;
     std::string json_buffer;
 
-    while (1)
-    {
+    while (1) {
         delay(5);
         feedTheDog();
 

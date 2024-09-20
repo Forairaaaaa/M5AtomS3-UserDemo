@@ -1,12 +1,7 @@
-/**
- * @file app_main.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-04-22
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include <app.h>
 #include "hal_atom_s3/hal_atom_s3.h"
@@ -32,14 +27,13 @@ extern "C" void app_main(void)
         esp_err_t err;
         nvs_flash_init();
         part = esp_partition_find_first((esp_partition_type_t)233, (esp_partition_subtype_t)0x23, NULL);
-        if (part == 0)
-        {
+        if (part == 0) {
             spdlog::error("asset pool partition not found!\n");
             return;
         }
-        err = esp_partition_mmap(part, 0, 2 * 1024 * 1024, ESP_PARTITION_MMAP_DATA, (const void**)&static_asset, &handler);
-        if (err != ESP_OK)
-        {
+        err = esp_partition_mmap(part, 0, 2 * 1024 * 1024, ESP_PARTITION_MMAP_DATA, (const void**)&static_asset,
+                                 &handler);
+        if (err != ESP_OK) {
             spdlog::error("map asset pool failed!\n");
             return;
         }
@@ -53,8 +47,7 @@ extern "C" void app_main(void)
 
     APP::Setup(callback);
 
-    while (1)
-    {
+    while (1) {
         APP::Loop();
     }
 }

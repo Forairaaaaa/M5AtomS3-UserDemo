@@ -1,12 +1,7 @@
-/**
- * @file hal_watch_dog.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-06-27
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "../hal_atom_s3r.h"
 #include "../hal_config.h"
@@ -20,13 +15,11 @@ static uint8_t _dog = 0;
 static std::mutex _feed_mutex;
 static void _daemon_watch_dog(void* param)
 {
-    while (1)
-    {
+    while (1) {
         vTaskDelay(pdMS_TO_TICKS(1000));
         _feed_mutex.lock();
         _dog++;
-        if (_dog > 6)
-        {
+        if (_dog > 6) {
             spdlog::error(":(");
             spdlog::error("watch dog timeout");
             spdlog::error("rebooting..");

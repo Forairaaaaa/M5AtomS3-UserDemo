@@ -1,12 +1,7 @@
-/**
- * @file hal_i2c.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-06-26
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "../hal_atom_s3.h"
 #include "../hal_config.h"
@@ -20,10 +15,8 @@ static void _i2c_scan(m5::I2C_Class& i2c_class)
     bool scan_list[120];
     i2c_class.scanID(scan_list);
     uint8_t device_num = 0;
-    for (int i = 8; i < 0x78; i++)
-    {
-        if (scan_list[i])
-        {
+    for (int i = 8; i < 0x78; i++) {
+        if (scan_list[i]) {
             device_num++;
             spdlog::info("get 0x{0:x}", i);
         }
@@ -58,28 +51,27 @@ static std::vector<uint8_t>* _i2c_scan_result = nullptr;
 
 bool HAL_AtomS3::startI2CScan()
 {
-    if (_i2c_scan_result == nullptr)
-        _i2c_scan_result = new std::vector<uint8_t>;
+    if (_i2c_scan_result == nullptr) _i2c_scan_result = new std::vector<uint8_t>;
 
     bool scan_list[120];
     m5::Ex_I2C.scanID(scan_list);
 
     _i2c_scan_result->clear();
-    for (int i = 8; i < 0x78; i++)
-    {
-        if (scan_list[i])
-            _i2c_scan_result->push_back(i);
+    for (int i = 8; i < 0x78; i++) {
+        if (scan_list[i]) _i2c_scan_result->push_back(i);
     }
 
     return true;
 }
 
-std::vector<uint8_t>* HAL_AtomS3::getI2cScanResult() { return _i2c_scan_result; }
+std::vector<uint8_t>* HAL_AtomS3::getI2cScanResult()
+{
+    return _i2c_scan_result;
+}
 
 void HAL_AtomS3::freeI2cScanResult()
 {
-    if (_i2c_scan_result != nullptr)
-    {
+    if (_i2c_scan_result != nullptr) {
         delete _i2c_scan_result;
         _i2c_scan_result = nullptr;
     }

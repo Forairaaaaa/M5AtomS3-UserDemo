@@ -1,18 +1,12 @@
-/**
- * @file hal_ir.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-07-31
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "../hal_atom_s3r.h"
 #include "../hal_config.h"
 #include <mooncake.h>
-extern "C"
-{
+extern "C" {
 #include "../utils/ir_nec_transceiver/ir_nec_transceiver.h"
 }
 
@@ -38,7 +32,10 @@ void HAL_AtomS3R::_ir_init()
     // }
 }
 
-void HAL_AtomS3R::irSendNecMsg(uint16_t addr, uint16_t command) { ir_nec_transceiver_send(addr, command); }
+void HAL_AtomS3R::irSendNecMsg(uint16_t addr, uint16_t command)
+{
+    ir_nec_transceiver_send(addr, command);
+}
 
 bool HAL_AtomS3R::irSendCmd(uint8_t cmd)
 {

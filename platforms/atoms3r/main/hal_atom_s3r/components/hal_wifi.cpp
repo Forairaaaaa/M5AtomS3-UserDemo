@@ -1,12 +1,7 @@
-/**
- * @file hal_wifi.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-08-09
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "../hal_atom_s3r.h"
 #include "../hal_config.h"
@@ -27,21 +22,22 @@ bool HAL_AtomS3R::startWifiScan()
     return true;
 }
 
-bool HAL_AtomS3R::isWifiScanFinish() { return WiFi.scanComplete() >= 0; }
+bool HAL_AtomS3R::isWifiScanFinish()
+{
+    return WiFi.scanComplete() >= 0;
+}
 
 static std::vector<NETWORK::WifiScanResult_t>* _wifi_scan_result = nullptr;
 
 std::vector<NETWORK::WifiScanResult_t>* HAL_AtomS3R::getWifiScanResult()
 {
-    if (_wifi_scan_result == nullptr)
-    {
+    if (_wifi_scan_result == nullptr) {
         // Create
         _wifi_scan_result = new std::vector<NETWORK::WifiScanResult_t>;
 
         // Copy and free
         NETWORK::WifiScanResult_t result_buffer;
-        for (int i = 0; i < WiFi.scanComplete(); i++)
-        {
+        for (int i = 0; i < WiFi.scanComplete(); i++) {
             result_buffer.ssid = WiFi.SSID(i).c_str();
             result_buffer.rssi = WiFi.RSSI(i);
             _wifi_scan_result->push_back(result_buffer);
@@ -54,8 +50,7 @@ std::vector<NETWORK::WifiScanResult_t>* HAL_AtomS3R::getWifiScanResult()
 
 void HAL_AtomS3R::freeWifiScanResult()
 {
-    if (_wifi_scan_result != nullptr)
-    {
+    if (_wifi_scan_result != nullptr) {
         delete _wifi_scan_result;
         _wifi_scan_result = nullptr;
     }

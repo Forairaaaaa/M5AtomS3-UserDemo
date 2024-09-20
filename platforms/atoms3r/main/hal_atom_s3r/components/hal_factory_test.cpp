@@ -1,12 +1,7 @@
-/**
- * @file hal_factory_test.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-07-31
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "../hal_atom_s3r.h"
 #include "../hal_config.h"
@@ -41,11 +36,11 @@ static void _wifi_test_daemon(void* param)
 
     // Reset
     _wifi_test_result.Borrow();
-    _wifi_test_result.Data().is_done = false;
-    _wifi_test_result.Data().is_passed = false;
-    _wifi_test_result.Data().best_rssi = 0;
-    _wifi_test_result.Data().test_result = "";
-    _wifi_test_result.Data().target_ssid = FACTORY_TEST_WIFI_SSID;
+    _wifi_test_result.Data().is_done         = false;
+    _wifi_test_result.Data().is_passed       = false;
+    _wifi_test_result.Data().best_rssi       = 0;
+    _wifi_test_result.Data().test_result     = "";
+    _wifi_test_result.Data().target_ssid     = FACTORY_TEST_WIFI_SSID;
     _wifi_test_result.Data().target_password = FACTORY_TEST_WIFI_PASSWORD;
     _wifi_test_result.Return();
 
@@ -58,34 +53,28 @@ static void _wifi_test_daemon(void* param)
     spdlog::info("[wifi test] start wifi scan");
     int n = WiFi.scanNetworks();
     _wifi_test_result.Borrow();
-    if (n == 0)
-    {
+    if (n == 0) {
         WiFi.scanDelete();
 
         spdlog::info("[wifi test] scan failed");
 
         _wifi_test_result.Data().test_result = "扫描失败";
-        _wifi_test_result.Data().is_done = true;
-        _wifi_test_result.Data().is_passed = false;
+        _wifi_test_result.Data().is_done     = true;
+        _wifi_test_result.Data().is_passed   = false;
         _wifi_test_result.Return();
 
         vTaskDelete(NULL);
         vTaskDelay(66666);
         return;
-    }
-    else
-    {
+    } else {
         _wifi_test_result.Data().best_rssi = WiFi.RSSI(0);
-        for (int i = 0; i < n; ++i)
-        {
-            if (WiFi.RSSI(i) > _wifi_test_result.Data().best_rssi)
-                _wifi_test_result.Data().best_rssi = WiFi.RSSI(i);
+        for (int i = 0; i < n; ++i) {
+            if (WiFi.RSSI(i) > _wifi_test_result.Data().best_rssi) _wifi_test_result.Data().best_rssi = WiFi.RSSI(i);
         }
         spdlog::info("[wifi test] get best rssi: {} in {} wifis", _wifi_test_result.Data().best_rssi, n);
 
         // If not pass
-        if (_wifi_test_result.Data().best_rssi < WIFI_PASS_RSSI_TH)
-        {
+        if (_wifi_test_result.Data().best_rssi < WIFI_PASS_RSSI_TH) {
             WiFi.scanDelete();
 
             spdlog::info("[wifi test] lower than threshold: {}", WIFI_PASS_RSSI_TH);
@@ -93,7 +82,7 @@ static void _wifi_test_daemon(void* param)
             _wifi_test_result.Data().test_result = "RSSI值低: ";
             _wifi_test_result.Data().test_result += std::to_string(_wifi_test_result.Data().best_rssi);
 
-            _wifi_test_result.Data().is_done = true;
+            _wifi_test_result.Data().is_done   = true;
             _wifi_test_result.Data().is_passed = false;
             _wifi_test_result.Return();
 
@@ -113,19 +102,17 @@ static void _wifi_test_daemon(void* param)
 
     /* Wait for the connection */
     uint32_t time_conut = millis();
-    while (WiFi.status() != WL_CONNECTED)
-    {
+    while (WiFi.status() != WL_CONNECTED) {
         delay(1000);
 
         // Check timeout
-        if ((millis() - time_conut) > 10000)
-        {
+        if ((millis() - time_conut) > 10000) {
             spdlog::info("[wifi test] connect time out: {}ms", 10000);
 
             _wifi_test_result.Borrow();
             _wifi_test_result.Data().test_result = "连接超时";
-            _wifi_test_result.Data().is_done = true;
-            _wifi_test_result.Data().is_passed = false;
+            _wifi_test_result.Data().is_done     = true;
+            _wifi_test_result.Data().is_passed   = false;
             _wifi_test_result.Return();
 
             vTaskDelete(NULL);
@@ -142,7 +129,7 @@ static void _wifi_test_daemon(void* param)
     _wifi_test_result.Borrow();
     _wifi_test_result.Data().test_result = "测试通过 IP:";
     _wifi_test_result.Data().test_result += ip.c_str();
-    _wifi_test_result.Data().is_done = true;
+    _wifi_test_result.Data().is_done   = true;
     _wifi_test_result.Data().is_passed = true;
     _wifi_test_result.Return();
     delay(1000);
@@ -155,9 +142,14 @@ void HAL_AtomS3R::startWifiFactoryTestDaemon()
     xTaskCreate(_wifi_test_daemon, "wifi", 4000, NULL, 6, NULL);
 }
 
-FACTORY_TEST::WifiTestResult_t* HAL_AtomS3R::getWifiFactoryTestResult() { return &_wifi_test_result; }
+FACTORY_TEST::WifiTestResult_t* HAL_AtomS3R::getWifiFactoryTestResult()
+{
+    return &_wifi_test_result;
+}
 
-void HAL_AtomS3R::startBleFactoryTestDaemon() {}
+void HAL_AtomS3R::startBleFactoryTestDaemon()
+{
+}
 
 /* -------------------------------------------------------------------------- */
 /*                                    Mbus                                    */
@@ -169,18 +161,15 @@ static void _mbus_test_daemon(void* param)
     spdlog::info("start mbus test daemon");
 
     // Setup
-    for (auto& i : _mbus_pin_list)
-    {
+    for (auto& i : _mbus_pin_list) {
         gpio_reset_pin((gpio_num_t)i);
         gpio_set_direction((gpio_num_t)i, GPIO_MODE_INPUT_OUTPUT);
         gpio_set_pull_mode((gpio_num_t)i, GPIO_PULLUP_PULLDOWN);
         gpio_set_level((gpio_num_t)i, 0);
     }
 
-    while (1)
-    {
-        for (auto& i : _mbus_pin_list)
-        {
+    while (1) {
+        for (auto& i : _mbus_pin_list) {
             // spdlog::info("{} {}", i, gpio_get_level((gpio_num_t)i) == 0 ? 1 : 0);
             gpio_set_level((gpio_num_t)i, gpio_get_level((gpio_num_t)i) == 0 ? 1 : 0);
             vTaskDelay(pdMS_TO_TICKS(300));
@@ -197,4 +186,7 @@ void HAL_AtomS3R::startMbusFactoryTestDaemon()
     xTaskCreate(_mbus_test_daemon, "io", 4000, NULL, 5, NULL);
 }
 
-size_t HAL_AtomS3R::getPsramSize() { return esp_psram_get_size(); }
+size_t HAL_AtomS3R::getPsramSize()
+{
+    return esp_psram_get_size();
+}

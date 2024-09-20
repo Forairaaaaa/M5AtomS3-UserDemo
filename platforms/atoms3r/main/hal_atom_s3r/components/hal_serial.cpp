@@ -1,12 +1,7 @@
-/**
- * @file hal_serial.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-08-09
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "../hal_atom_s3r.h"
 #include "../hal_config.h"
@@ -22,26 +17,24 @@ void HAL_AtomS3R::startUartPassThrough(uint32_t baudrate, int pinRx, int pinTx)
     Serial1.end();
     Serial1.begin(baudrate, SERIAL_8N1, pinRx, pinTx);
 
-    if (_usb_serial == nullptr)
-    {
+    if (_usb_serial == nullptr) {
         _usb_serial = new USBCDC(0);
         _usb_serial->begin(115200);
     }
 }
 
-void HAL_AtomS3R::updateUartPassThrough(std::function<void(uint8_t)> onGrove2Usb, std::function<void(uint8_t)> onUsb2Grove)
+void HAL_AtomS3R::updateUartPassThrough(std::function<void(uint8_t)> onGrove2Usb,
+                                        std::function<void(uint8_t)> onUsb2Grove)
 {
     /* ------------------------------- Grove 2 usb ------------------------------ */
-    while (Serial1.available())
-    {
+    while (Serial1.available()) {
         uint8_t c = Serial1.read();
         _usb_serial->write(c);
         onGrove2Usb(c);
     }
 
     /* ------------------------------- Usb 2 grove ------------------------------ */
-    while (_usb_serial->available())
-    {
+    while (_usb_serial->available()) {
         uint8_t c = _usb_serial->read();
         Serial1.write(c);
         onUsb2Grove(c);
@@ -54,8 +47,7 @@ void HAL_AtomS3R::stopUartPassThrough()
 
     Serial1.end();
 
-    if (_usb_serial != nullptr)
-    {
+    if (_usb_serial != nullptr) {
         _usb_serial->end();
         delete _usb_serial;
         _usb_serial = nullptr;
@@ -90,7 +82,6 @@ void HAL_AtomS3R::stopPwm()
 /* -------------------------------------------------------------------------- */
 int HAL_AtomS3R::getAdcValue(uint8_t port)
 {
-    if (port == 1)
-        return analogRead(1);
+    if (port == 1) return analogRead(1);
     return analogRead(2);
 }

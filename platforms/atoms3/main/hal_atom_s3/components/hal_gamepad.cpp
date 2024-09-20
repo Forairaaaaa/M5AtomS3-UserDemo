@@ -1,12 +1,7 @@
-/**
- * @file hal_gamepad.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-06-27
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "../hal_atom_s3.h"
 #include "../hal_config.h"
@@ -24,7 +19,6 @@ void HAL_AtomS3::_gamepad_init()
 
 bool HAL_AtomS3::getButton(GAMEPAD::GamePadButton_t button)
 {
-    if (button == GAMEPAD::BTN_A)
-        return !gpio_get_level((gpio_num_t)HAL_PIN_BUTTON_A);
+    if (button == GAMEPAD::BTN_A) return !gpio_get_level((gpio_num_t)HAL_PIN_BUTTON_A);
     return false;
 }
