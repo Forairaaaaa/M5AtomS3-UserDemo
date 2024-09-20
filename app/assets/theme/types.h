@@ -1,12 +1,7 @@
-/**
- * @file theme.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2023-11-04
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2023
- *
+ * SPDX-License-Identifier: MIT
  */
 #pragma once
 #include <cstdint>
@@ -14,8 +9,7 @@
 /* -------------------------------------------------------------------------- */
 /*                                   Colors                                   */
 /* -------------------------------------------------------------------------- */
-struct ColorPool_t
-{
+struct ColorPool_t {
     /* ----------------------- Add your theme define here ----------------------- */
 
     // struct Misc_t

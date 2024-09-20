@@ -1,12 +1,7 @@
-/**
- * @file i2c.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-08-05
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "../view.h"
 #include <cstdint>
@@ -23,8 +18,8 @@ void func_uart_t::start()
     //              SERIAL_8N1,
     //              uart_io_list[uart_mon_mode_index][0],
     //              uart_io_list[uart_mon_mode_index][1]);
-    HAL::StartUartPassThrough(
-        uart_baud_list[uart_mon_mode_index], uart_io_list[uart_mon_mode_index][0], uart_io_list[uart_mon_mode_index][1]);
+    HAL::StartUartPassThrough(uart_baud_list[uart_mon_mode_index], uart_io_list[uart_mon_mode_index][0],
+                              uart_io_list[uart_mon_mode_index][1]);
 
     HAL::GetDisplay()->drawPng(uart_mon_img_list[uart_mon_mode_index], ~0u, 0, 0);
     HAL::GetDisplay()->setFont(&fonts::Font0);
@@ -32,11 +27,9 @@ void func_uart_t::start()
 
 void func_uart_t::update(bool btn_click)
 {
-    if (btn_click)
-    {
+    if (btn_click) {
         uart_mon_mode_index++;
-        if (uart_mon_mode_index > 3)
-        {
+        if (uart_mon_mode_index > 3) {
             uart_mon_mode_index = 0;
         }
 
@@ -46,8 +39,8 @@ void func_uart_t::update(bool btn_click)
         //              SERIAL_8N1,
         //              uart_io_list[uart_mon_mode_index][0],
         //              uart_io_list[uart_mon_mode_index][1]);
-        HAL::StartUartPassThrough(
-            uart_baud_list[uart_mon_mode_index], uart_io_list[uart_mon_mode_index][0], uart_io_list[uart_mon_mode_index][1]);
+        HAL::StartUartPassThrough(uart_baud_list[uart_mon_mode_index], uart_io_list[uart_mon_mode_index][0],
+                                  uart_io_list[uart_mon_mode_index][1]);
 
         HAL::GetDisplay()->drawPng(uart_mon_img_list[uart_mon_mode_index], ~0u, 0, 0);
     }
@@ -63,8 +56,8 @@ void func_uart_t::update(bool btn_click)
     //         USBSerial.write(c);
     //         HAL::GetDisplay()->fillRect(86, 31, 128 - 86, 9);
     //         HAL::GetDisplay()->setCursor(93, 33);
-    //         HAL::GetDisplay()->setTextColor((random(0, 255) << 16 | random(0, 255) << 8 | random(0, 255)), TFT_BLACK);
-    //         HAL::GetDisplay()->printf("0x%02X", c);
+    //         HAL::GetDisplay()->setTextColor((random(0, 255) << 16 | random(0, 255) << 8 | random(0, 255)),
+    //         TFT_BLACK); HAL::GetDisplay()->printf("0x%02X", c);
     //     }
     // }
 
@@ -79,8 +72,8 @@ void func_uart_t::update(bool btn_click)
     //         Serial.write(c);
     //         HAL::GetDisplay()->fillRect(86, 41, 128 - 86, 9, TFT_BLACK);
     //         HAL::GetDisplay()->setCursor(93, 43);
-    //         HAL::GetDisplay()->setTextColor((random(0, 255) << 16 | random(0, 255) << 8 | random(0, 255)), TFT_BLACK);
-    //         HAL::GetDisplay()->printf("0x%02X", c);
+    //         HAL::GetDisplay()->setTextColor((random(0, 255) << 16 | random(0, 255) << 8 | random(0, 255)),
+    //         TFT_BLACK); HAL::GetDisplay()->printf("0x%02X", c);
     //     }
     // }
 

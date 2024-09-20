@@ -1,13 +1,8 @@
-/**
- * @file main.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-01-15
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include <app.h>
 #include "hal_desktop/hal_desktop.hpp"
 
@@ -33,4 +28,7 @@ void setup()
     APP::Setup(callback);
 }
 
-void loop() { APP::Loop(); }
+void loop()
+{
+    APP::Loop();
+}

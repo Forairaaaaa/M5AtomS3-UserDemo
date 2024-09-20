@@ -1,12 +1,7 @@
-/**
- * @file images.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-03-26
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #pragma once
 #include <cstddef>

@@ -1,12 +1,7 @@
-/**
- * @file app_startup_anim.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-08-01
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "app_startup_anim.h"
 #include "../../hal/hal.h"
@@ -46,7 +41,10 @@ void AppStartupAnim::onRunning()
     destroyApp();
 }
 
-void AppStartupAnim::onDestroy() { spdlog::info("{} onDestroy", getAppName()); }
+void AppStartupAnim::onDestroy()
+{
+    spdlog::info("{} onDestroy", getAppName());
+}
 
 void AppStartupAnim::_startup_anim()
 {
@@ -54,8 +52,7 @@ void AppStartupAnim::_startup_anim()
 
     std::vector<Transition2D> anim_list;
     anim_list.resize(8);
-    for (int i = 0; i < anim_list.size(); i++)
-    {
+    for (int i = 0; i < anim_list.size(); i++) {
         anim_list[i].setTransitionPath(EasingPath::easeOutBack);
         anim_list[i].setDuration(400);
         anim_list[i].setDelay(i * 60);
@@ -63,19 +60,16 @@ void AppStartupAnim::_startup_anim()
         anim_list[i].moveTo(0, HAL::GetCanvas()->height());
     }
 
-    while (1)
-    {
+    while (1) {
         HAL::GetCanvas()->fillScreen(TFT_BLACK);
 
-        for (int i = anim_list.size() - 1; i > 0; i--)
-        {
+        for (int i = anim_list.size() - 1; i > 0; i--) {
             anim_list[i].update(HAL::Millis());
             auto frame = anim_list[i].getValue();
             HAL::GetCanvas()->fillSmoothCircle(frame.x, frame.y, (i + 1) * 23, circle_color_list[i]);
         }
 
-        if (anim_list[anim_list.size() - 1].isFinish())
-            break;
+        if (anim_list[anim_list.size() - 1].isFinish()) break;
 
         HAL::CanvasUpdate();
         HAL::FeedTheDog();
@@ -95,8 +89,7 @@ void AppStartupAnim::_startup_anim_lvgl()
 
     std::vector<Transition2D> anim_list;
     anim_list.resize(8);
-    for (int i = anim_list.size() - 1; i > 0; i--)
-    {
+    for (int i = anim_list.size() - 1; i > 0; i--) {
         anim_list[i].setTransitionPath(EasingPath::easeOutBack);
         anim_list[i].setDuration(600);
         anim_list[i].setDelay(i * 40);
@@ -111,20 +104,18 @@ void AppStartupAnim::_startup_anim_lvgl()
     // Circles
     std::vector<lv_obj_t*> circles;
     circles.resize(anim_list.size());
-    for (int i = circles.size() - 1; i > 0; i--)
-    {
+    for (int i = circles.size() - 1; i > 0; i--) {
         // Create circles once
         circles[i] = lv_obj_create(lv_screen_active());
-        lv_obj_set_size(circles[i], (i + 1) * 46, (i + 1) * 46); // Diameter is radius * 2
+        lv_obj_set_size(circles[i], (i + 1) * 46, (i + 1) * 46);  // Diameter is radius * 2
         lv_obj_set_style_radius(circles[i], LV_RADIUS_CIRCLE, 0);
         lv_obj_set_style_bg_color(circles[i], lv_color_hex(circle_color_list[i]), 0);
-        lv_obj_set_style_border_width(circles[i], 0, 0); // Remove border
+        lv_obj_set_style_border_width(circles[i], 0, 0);  // Remove border
     }
 
     // Logo R
-    if (HAL::Type() == "AtomS3R")
-    {
-        ui_img_logo_r_png.data = AssetPool::GetImage().AppStartupAnim.logo_r;
+    if (HAL::Type() == "AtomS3R") {
+        ui_img_logo_r_png.data      = AssetPool::GetImage().AppStartupAnim.logo_r;
         ui_img_logo_r_png.data_size = sizeof(AssetPool::GetImage().AppStartupAnim.logo_r);
 
         lv_obj_t* img_logo_r = lv_image_create(lv_screen_active());
@@ -137,17 +128,14 @@ void AppStartupAnim::_startup_anim_lvgl()
     }
 
     // Update and render
-    while (1)
-    {
-        for (int i = anim_list.size() - 1; i > 0; i--)
-        {
+    while (1) {
+        for (int i = anim_list.size() - 1; i > 0; i--) {
             anim_list[i].update(lv_tick_get());
             auto frame = anim_list[i].getValue();
             lv_obj_align(circles[i], LV_ALIGN_CENTER, frame.x - LV_HOR_RES / 2, frame.y - LV_VER_RES / 2);
         }
 
-        if (anim_list[anim_list.size() - 1].isFinish())
-            break;
+        if (anim_list[anim_list.size() - 1].isFinish()) break;
 
         HAL::LvglTimerHandler();
         HAL::FeedTheDog();

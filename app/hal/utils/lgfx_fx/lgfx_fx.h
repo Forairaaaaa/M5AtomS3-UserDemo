@@ -1,12 +1,7 @@
-/**
- * @file lgfx_fx.hpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2023-11-11
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2023
- *
+ * SPDX-License-Identifier: MIT
  */
 #pragma once
 #include <M5GFX.h>
@@ -16,10 +11,11 @@
  * @brief Add apis to fill shape layer in difference mode
  *
  */
-class LGFX_SpriteFx : public LGFX_Sprite
-{
+class LGFX_SpriteFx : public LGFX_Sprite {
 public:
-    LGFX_SpriteFx(LovyanGFX* parent) : LGFX_Sprite(parent) {}
+    LGFX_SpriteFx(LovyanGFX* parent) : LGFX_Sprite(parent)
+    {
+    }
 
     void drawFastHLineInDifference(int32_t x, int32_t y, int32_t w);
     void fillRectInDifference(int32_t x, int32_t y, int32_t w, int32_t h);

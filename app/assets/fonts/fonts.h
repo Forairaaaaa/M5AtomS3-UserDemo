@@ -1,12 +1,7 @@
-/**
- * @file fonts.h
- * @author Forairaaaaa
- * @brief apps/tools/vlw2h
- * @version 0.1
- * @date 2023-11-04
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2023
- *
+ * SPDX-License-Identifier: MIT
  */
 #pragma once
 #include <cstddef>

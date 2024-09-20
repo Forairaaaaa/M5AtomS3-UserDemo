@@ -1,12 +1,7 @@
-/**
- * @file i2c.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-08-05
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "../view.h"
 #include <hal/hal.h>
@@ -23,15 +18,13 @@ void func_adc_t::start()
 
 void func_adc_t::update(bool btn_click)
 {
-    if (HAL::Millis() - last_update_time < 90)
-    {
+    if (HAL::Millis() - last_update_time < 90) {
         return;
     }
 
     ch1_vol = 0;
     ch2_vol = 0;
-    for (size_t i = 0; i < 32; i++)
-    {
+    for (size_t i = 0; i < 32; i++) {
         // TO HAL
         // ch1_vol += analogRead(1);
         // ch2_vol += analogRead(2);
@@ -45,7 +38,9 @@ void func_adc_t::update(bool btn_click)
     HAL::Delay(10);
 }
 
-void func_adc_t::stop() {}
+void func_adc_t::stop()
+{
+}
 
 void func_adc_t::drawVolValue(uint32_t ch1, uint32_t ch2)
 {

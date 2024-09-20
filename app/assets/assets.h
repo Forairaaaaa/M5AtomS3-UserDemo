@@ -1,12 +1,7 @@
-/**
- * @file assets.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-04-15
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #pragma once
 #include <cstdint>
@@ -21,8 +16,7 @@
  * @brief A struct to define static binary asset
  *
  */
-struct StaticAsset_t
-{
+struct StaticAsset_t {
     FontPool_t Font;
     ImagePool_t Image;
     ColorPool_t Color;
@@ -33,8 +27,7 @@ struct StaticAsset_t
  * @brief A Class to handle static asset
  *
  */
-class AssetPool
-{
+class AssetPool {
     /* -------------------------------------------------------------------------- */
     /*                                  Singleton                                 */
     /* -------------------------------------------------------------------------- */
@@ -45,8 +38,7 @@ public:
     static AssetPool* Get();
 
 private:
-    struct Data_t
-    {
+    struct Data_t {
         StaticAsset_t* static_asset = nullptr;
         LocalTextPoolMap_t local_text_pool_map;
         LocaleCode_t locale_code = locale_code_en;
@@ -62,9 +54,18 @@ public:
 public:
     void setLocalTextTo(LocaleCode_t code);
     void setLocaleCode(LocaleCode_t code);
-    LocaleCode_t getLocaleCode() { return _data.locale_code; }
-    bool isLocaleEn() { return _data.locale_code == locale_code_en; }
-    inline const LocalTextPoolMap_t& getText() { return _data.local_text_pool_map; }
+    LocaleCode_t getLocaleCode()
+    {
+        return _data.locale_code;
+    }
+    bool isLocaleEn()
+    {
+        return _data.locale_code == locale_code_en;
+    }
+    inline const LocalTextPoolMap_t& getText()
+    {
+        return _data.local_text_pool_map;
+    }
 
     /* ---------------------------------- Font ---------------------------------- */
 public:
@@ -75,23 +76,65 @@ public:
 
     /* ------------------------------- Static wrap ------------------------------ */
 public:
-    static StaticAsset_t* GetStaticAsset() { return Get()->getStaticAsset(); }
-    static bool InjectStaticAsset(StaticAsset_t* asset) { return Get()->injectStaticAsset(asset); }
+    static StaticAsset_t* GetStaticAsset()
+    {
+        return Get()->getStaticAsset();
+    }
+    static bool InjectStaticAsset(StaticAsset_t* asset)
+    {
+        return Get()->injectStaticAsset(asset);
+    }
 
-    static const ImagePool_t& GetImage() { return GetStaticAsset()->Image; }
-    static const ColorPool_t& GetColor() { return GetStaticAsset()->Color; }
-    static const TextPool_t& GetTextPool() { return GetStaticAsset()->Text; }
-    static const LocalTextPoolMap_t& GetText() { return Get()->getText(); }
+    static const ImagePool_t& GetImage()
+    {
+        return GetStaticAsset()->Image;
+    }
+    static const ColorPool_t& GetColor()
+    {
+        return GetStaticAsset()->Color;
+    }
+    static const TextPool_t& GetTextPool()
+    {
+        return GetStaticAsset()->Text;
+    }
+    static const LocalTextPoolMap_t& GetText()
+    {
+        return Get()->getText();
+    }
 
-    static void SetLocaleCode(LocaleCode_t code) { Get()->setLocaleCode(code); }
-    static void SetLocalTextTo(LocaleCode_t code) { Get()->setLocalTextTo(code); }
-    static LocaleCode_t GetLocaleCode() { return Get()->getLocaleCode(); }
-    static bool IsLocaleEn() { return Get()->isLocaleEn(); }
+    static void SetLocaleCode(LocaleCode_t code)
+    {
+        Get()->setLocaleCode(code);
+    }
+    static void SetLocalTextTo(LocaleCode_t code)
+    {
+        Get()->setLocalTextTo(code);
+    }
+    static LocaleCode_t GetLocaleCode()
+    {
+        return Get()->getLocaleCode();
+    }
+    static bool IsLocaleEn()
+    {
+        return Get()->isLocaleEn();
+    }
 
-    static void LoadFont14(LGFX_SpriteFx* lgfxDevice) { Get()->loadFont14(lgfxDevice); }
-    static void LoadFont16(LGFX_SpriteFx* lgfxDevice) { Get()->loadFont16(lgfxDevice); }
-    static void LoadFont24(LGFX_SpriteFx* lgfxDevice) { Get()->loadFont24(lgfxDevice); }
-    static void LoadFont72(LGFX_SpriteFx* lgfxDevice) { Get()->loadFont72(lgfxDevice); }
+    static void LoadFont14(LGFX_SpriteFx* lgfxDevice)
+    {
+        Get()->loadFont14(lgfxDevice);
+    }
+    static void LoadFont16(LGFX_SpriteFx* lgfxDevice)
+    {
+        Get()->loadFont16(lgfxDevice);
+    }
+    static void LoadFont24(LGFX_SpriteFx* lgfxDevice)
+    {
+        Get()->loadFont24(lgfxDevice);
+    }
+    static void LoadFont72(LGFX_SpriteFx* lgfxDevice)
+    {
+        Get()->loadFont72(lgfxDevice);
+    }
 
 public:
     /* -------------------------- Generate static asset ------------------------- */

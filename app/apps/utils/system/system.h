@@ -1,12 +1,7 @@
-/**
- * @file system.h
- * @author Forairaaaaa
- * @brief System class to provide app layer commmon apis
- * @version 0.1
- * @date 2024-03-06
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #pragma once
 #include "inputs/inputs.h"

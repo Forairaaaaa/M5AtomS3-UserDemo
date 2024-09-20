@@ -1,12 +1,7 @@
-/**
- * @file apps.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2023-11-04
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2023
- *
+ * SPDX-License-Identifier: MIT
  */
 #pragma once
 #include "app_template/app_template.h"
@@ -24,11 +19,9 @@ inline void app_run_startup_anim(MOONCAKE::Mooncake* mooncake)
     /* -------------------- Install and run startup anim here ------------------- */
     auto startup_anim = new MOONCAKE::APPS::AppStartupAnim_Packer;
     mooncake->createAndStartApp(startup_anim);
-    while (1)
-    {
+    while (1) {
         mooncake->update();
-        if (mooncake->getAppManager()->getCreatedAppNum() == 0)
-            break;
+        if (mooncake->getAppManager()->getCreatedAppNum() == 0) break;
     }
     delete startup_anim;
 }
@@ -47,8 +40,7 @@ inline void app_install_default_startup_app(MOONCAKE::Mooncake* mooncake)
     // app_packers.push_back(new MOONCAKE::APPS::AppTemplate_Packer);
     app_packers.push_back(new MOONCAKE::APPS::AppUserDemo_Packer);
 
-    for (const auto& i : app_packers)
-    {
+    for (const auto& i : app_packers) {
         mooncake->installApp(i);
         mooncake->createAndStartApp(i);
     }

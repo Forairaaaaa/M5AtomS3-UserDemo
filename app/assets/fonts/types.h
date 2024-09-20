@@ -1,12 +1,7 @@
-/**
- * @file types.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-03-30
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #pragma once
 #include <cstdint>
@@ -14,8 +9,7 @@
 /* -------------------------------------------------------------------------- */
 /*                                    Fonts                                   */
 /* -------------------------------------------------------------------------- */
-struct FontPool_t
-{
+struct FontPool_t {
     /* ------------------------ Add your font define here ----------------------- */
 
     // uint8_t* montserrat_semibolditalic_24 = nullptr;

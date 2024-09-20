@@ -1,19 +1,13 @@
-/**
- * @file lgfx_fx.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2023-11-11
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2023
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "lgfx_fx.h"
 
 void LGFX_SpriteFx::drawFastHLineInDifference(int32_t x, int32_t y, int32_t w)
 {
-    if (!_panel->isReadable())
-        drawFastHLine(x, y, w);
+    if (!_panel->isReadable()) drawFastHLine(x, y, w);
 
     startWrite();
 
@@ -30,8 +24,7 @@ void LGFX_SpriteFx::drawFastHLineInDifference(int32_t x, int32_t y, int32_t w)
     last_color_buffer.G8(abs((int16_t)fill_color.G8() - color_buffer.G8()));
     last_color_buffer.B8(abs((int16_t)fill_color.B8() - color_buffer.B8()));
 
-    for (int j = 0; j < w; j++)
-    {
+    for (int j = 0; j < w; j++) {
         // Get difference
         readRectRGB(x + j, y, 1, 1, &color_buffer);
         color_buffer.R8(abs((int16_t)fill_color.R8() - color_buffer.R8()));
@@ -39,28 +32,23 @@ void LGFX_SpriteFx::drawFastHLineInDifference(int32_t x, int32_t y, int32_t w)
         color_buffer.B8(abs((int16_t)fill_color.B8() - color_buffer.B8()));
 
         // If comes new color
-        if (color_buffer.get() != last_color_buffer.get())
-        {
+        if (color_buffer.get() != last_color_buffer.get()) {
             setColor(last_color_buffer);
             drawFastHLine(x + j - draw_line_width, y, draw_line_width);
             last_color_buffer = color_buffer;
             // If also reach the end of line
-            if (j == w - 1)
-            {
+            if (j == w - 1) {
                 draw_line_width = 0;
-            }
-            else
-            {
+            } else {
                 draw_line_width = 1;
                 continue;
             }
         }
         // If reach the end of line
-        if (j == w - 1)
-        {
+        if (j == w - 1) {
             setColor(last_color_buffer);
             drawFastHLine(x + j - draw_line_width, y, draw_line_width + 1);
-            draw_line_width = 0;
+            draw_line_width   = 0;
             last_color_buffer = color_buffer;
             break;
         }
@@ -73,15 +61,13 @@ void LGFX_SpriteFx::drawFastHLineInDifference(int32_t x, int32_t y, int32_t w)
 
 void LGFX_SpriteFx::fillRectInDifference(int32_t x, int32_t y, int32_t w, int32_t h)
 {
-    if (!_panel->isReadable())
-        fillRect(x, y, w, h);
+    if (!_panel->isReadable()) fillRect(x, y, w, h);
 
     _adjust_abs(x, w);
     _adjust_abs(y, h);
 
     startWrite();
-    for (int i = 0; i < h; i++)
-    {
+    for (int i = 0; i < h; i++) {
         drawFastHLineInDifference(x, y + i, w);
     }
     endWrite();
@@ -92,18 +78,15 @@ constexpr float HiAlphaTheshold = 1.0f - LoAlphaTheshold;
 
 void LGFX_SpriteFx::fillSmoothRoundRectInDifference(int32_t x, int32_t y, int32_t w, int32_t h, int32_t r)
 {
-    if (!_panel->isReadable())
-        fillSmoothRoundRect(x, y, w, h, r);
+    if (!_panel->isReadable()) fillSmoothRoundRect(x, y, w, h, r);
 
     startWrite();
-    int32_t xs = 0;
-    int32_t cx = 0;
+    int32_t xs      = 0;
+    int32_t cx      = 0;
     uint32_t rgb888 = _write_conv.revert_rgb888(_color.raw);
     // Limit radius to half width or height
-    if (r > w / 2)
-        r = w / 2;
-    if (r > h / 2)
-        r = h / 2;
+    if (r > w / 2) r = w / 2;
+    if (r > h / 2) r = h / 2;
 
     y += r;
     h -= 2 * r;
@@ -115,22 +98,16 @@ void LGFX_SpriteFx::fillSmoothRoundRectInDifference(int32_t x, int32_t y, int32_
     r++;
     int32_t r2 = r * r;
 
-    for (int32_t cy = r - 1; cy > 0; cy--)
-    {
+    for (int32_t cy = r - 1; cy > 0; cy--) {
         int32_t dy2 = (r - cy) * (r - cy);
-        for (cx = xs; cx < r; cx++)
-        {
+        for (cx = xs; cx < r; cx++) {
             int32_t hyp2 = (r - cx) * (r - cx) + dy2;
-            if (hyp2 <= r1)
-                break;
-            if (hyp2 >= r2)
-                continue;
+            if (hyp2 <= r1) break;
+            if (hyp2 >= r2) continue;
             float alphaf = (float)r - sqrtf(hyp2);
-            if (alphaf > HiAlphaTheshold)
-                break;
+            if (alphaf > HiAlphaTheshold) break;
             xs = cx;
-            if (alphaf < LoAlphaTheshold)
-                continue;
+            if (alphaf < LoAlphaTheshold) continue;
             uint8_t alpha = alphaf * 255;
             fillRectAlpha(x + cx - r, y + cy - r, 1, 1, alpha, rgb888);
             fillRectAlpha(x - cx + r + w, y + cy - r, 1, 1, alpha, rgb888);

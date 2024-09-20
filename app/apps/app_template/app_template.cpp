@@ -1,12 +1,7 @@
-/**
- * @file app_template.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date <date></date>
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "app_template.h"
 #include "../../hal/hal.h"
@@ -18,14 +13,23 @@ using namespace SYSTEM::INPUTS;
 using namespace SYSTEM::UI;
 
 // App name
-const char* AppTemplate_Packer::getAppName() { return "AppTemplate"; }
+const char* AppTemplate_Packer::getAppName()
+{
+    return "AppTemplate";
+}
 
 // Theme color
 constexpr static uint32_t _theme_color = 0xFFFFFF;
-void* AppTemplate_Packer::getCustomData() { return (void*)(&_theme_color); }
+void* AppTemplate_Packer::getCustomData()
+{
+    return (void*)(&_theme_color);
+}
 
 // Icon
-void* AppTemplate_Packer::getAppIcon() { return nullptr; }
+void* AppTemplate_Packer::getAppIcon()
+{
+    return nullptr;
+}
 
 // Like setup()...
 void AppTemplate::onResume()
@@ -45,8 +49,7 @@ void AppTemplate::onResume()
 void AppTemplate::onRunning()
 {
     // Print hi in every 1s
-    if (HAL::Millis() - _data.time_count > 1000)
-    {
+    if (HAL::Millis() - _data.time_count > 1000) {
         spdlog::info("Hi");
 
         HAL::GetCanvas()->printf("> Hi\n");
@@ -58,16 +61,14 @@ void AppTemplate::onRunning()
     // Update button state
     Button::Update();
 
-    if (Button::A()->wasClicked())
-    {
+    if (Button::A()->wasClicked()) {
         spdlog::info("button a clicked");
 
         HAL::GetCanvas()->printf("> Btn A clicked\n");
         HAL::CanvasUpdate();
     }
 
-    if (Button::A()->isHolding())
-    {
+    if (Button::A()->isHolding()) {
         HAL::GetCanvas()->printf("> Bye\n");
         HAL::CanvasUpdate();
 

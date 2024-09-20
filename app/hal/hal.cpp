@@ -1,12 +1,7 @@
-/**
- * @file hal.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2023-11-04
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2023
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "hal.h"
 #include <mooncake.h>
@@ -15,20 +10,24 @@
 
 HAL* HAL::_hal = nullptr;
 
-HAL* HAL::Get() { return _hal; }
+HAL* HAL::Get()
+{
+    return _hal;
+}
 
-bool HAL::Check() { return _hal != nullptr; }
+bool HAL::Check()
+{
+    return _hal != nullptr;
+}
 
 bool HAL::Inject(HAL* hal)
 {
-    if (_hal != nullptr)
-    {
+    if (_hal != nullptr) {
         spdlog::error("HAL already exist");
         return false;
     }
 
-    if (hal == nullptr)
-    {
+    if (hal == nullptr) {
         spdlog::error("invalid HAL ptr");
         return false;
     }
@@ -43,8 +42,7 @@ bool HAL::Inject(HAL* hal)
 
 void HAL::Destroy()
 {
-    if (_hal == nullptr)
-    {
+    if (_hal == nullptr) {
         spdlog::error("HAL not exist");
         return;
     }
@@ -66,14 +64,13 @@ void HAL::renderFpsPanel()
     time_count = millis();
 }
 
-static constexpr int _msg_start_x = 16;
-static constexpr int _msg_start_y = 130;
+static constexpr int _msg_start_x     = 16;
+static constexpr int _msg_start_y     = 130;
 static constexpr int _msg_line_height = 32;
 
 void HAL::popFatalError(std::string msg)
 {
-    while (1)
-    {
+    while (1) {
         feedTheDog();
         spdlog::error("{}", msg);
         delay(1000);
@@ -122,9 +119,13 @@ void HAL::popFatalError(std::string msg)
     // }
 }
 
-void HAL::popWarning(std::string msg) {}
+void HAL::popWarning(std::string msg)
+{
+}
 
-void HAL::popSuccess(std::string msg, bool showSuccessLabel) {}
+void HAL::popSuccess(std::string msg, bool showSuccessLabel)
+{
+}
 
 // Cpp sucks
 tm* HAL::getLocalTime()
@@ -135,24 +136,20 @@ tm* HAL::getLocalTime()
 
 bool HAL::getAnyButton()
 {
-    for (int i = GAMEPAD::BTN_START; i < GAMEPAD::GAMEPAD_BUTTON_NUM; i++)
-    {
-        if (getButton(static_cast<GAMEPAD::GamePadButton_t>(i)))
-            return true;
+    for (int i = GAMEPAD::BTN_START; i < GAMEPAD::GAMEPAD_BUTTON_NUM; i++) {
+        if (getButton(static_cast<GAMEPAD::GamePadButton_t>(i))) return true;
     }
     return false;
 }
 
 bool HAL::checkWifiConfig()
 {
-    if (_data.config.wifiSsid.empty())
-    {
+    if (_data.config.wifiSsid.empty()) {
         popWarning("WiFi SSID is empty");
         return false;
     }
 
-    if (_data.config.wifiPassword.empty())
-    {
+    if (_data.config.wifiPassword.empty()) {
         popWarning("WiFi Password is empty");
         return false;
     }

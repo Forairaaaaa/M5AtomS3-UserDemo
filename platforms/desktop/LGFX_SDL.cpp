@@ -7,8 +7,7 @@ void loop(void);
 __attribute__((weak)) int user_func(bool* running)
 {
     setup();
-    do
-    {
+    do {
         loop();
     } while (*running);
     return 0;

@@ -1,12 +1,7 @@
-/**
- * @file types.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-03-30
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #pragma once
 #include <cstdint>
@@ -14,16 +9,13 @@
 /* -------------------------------------------------------------------------- */
 /*                                   Images                                   */
 /* -------------------------------------------------------------------------- */
-struct ImagePool_t
-{
+struct ImagePool_t {
     /* ----------------------- Add your image define here ----------------------- */
-    struct AppStartupAnim_t
-    {
+    struct AppStartupAnim_t {
         uint8_t logo_r[14280];
     };
     AppStartupAnim_t AppStartupAnim;
-    struct AppUserDemo_t
-    {
+    struct AppUserDemo_t {
         uint8_t wifi_scan_img[7837];
         uint8_t i2c_scan_img[7750];
         uint8_t uart_mon_img[8222];

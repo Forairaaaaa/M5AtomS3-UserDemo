@@ -1,12 +1,7 @@
-/**
- * @file i2c.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-08-05
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "../view.h"
 #include <cstdint>
@@ -27,19 +22,16 @@ void func_ir_t::start()
 
 void func_ir_t::update(bool btn_click)
 {
-    if (btn_click)
-    {
+    if (btn_click) {
         ir_send_mode_index++;
-        if (ir_send_mode_index > 1)
-        {
+        if (ir_send_mode_index > 1) {
             ir_send_mode_index = 0;
         }
         HAL::GetDisplay()->drawPng(ir_img_list[ir_send_mode_index], ~0u, 0, 0);
     }
 
     // USB => IR
-    if (ir_send_mode_index == 0)
-    {
+    if (ir_send_mode_index == 0) {
         // TO HAL
         // if (USBSerial.available())
         // {
@@ -49,16 +41,12 @@ void func_ir_t::update(bool btn_click)
         // }
 
         uint8_t cmd = 0;
-        if (HAL::GetIrCmdFromSerial(cmd))
-        {
+        if (HAL::GetIrCmdFromSerial(cmd)) {
             HAL::IrSendCmd(cmd);
             drawIrData((uint32_t)cmd);
         }
-    }
-    else
-    {
-        if (HAL::Millis() - ir_last_send_time > 1000)
-        {
+    } else {
+        if (HAL::Millis() - ir_last_send_time > 1000) {
             ir_cmd++;
             // TO HAL
             // ir_tx_send(ir_cmd);
@@ -71,7 +59,10 @@ void func_ir_t::update(bool btn_click)
     HAL::Delay(10);
 }
 
-void func_ir_t::stop() { HAL::GetDisplay()->setTextColor(TFT_WHITE); }
+void func_ir_t::stop()
+{
+    HAL::GetDisplay()->setTextColor(TFT_WHITE);
+}
 
 void func_ir_t::drawIrData(uint32_t _ir_cmd)
 {

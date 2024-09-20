@@ -1,12 +1,7 @@
-/**
- * @file i2c.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-08-05
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "../view.h"
 #include <hal/hal.h>
@@ -33,8 +28,7 @@ void func_i2c_t::start()
 
 void func_i2c_t::update(bool btn_click)
 {
-    if (btn_click)
-    {
+    if (btn_click) {
         _btn_clicked = !_btn_clicked;
         _canvas->clear(TFT_BLACK);
         _canvas->setTextSize(1);
@@ -45,13 +39,12 @@ void func_i2c_t::update(bool btn_click)
         draw();
     }
 
-    if (!_btn_clicked)
-    {
+    if (!_btn_clicked) {
         _btn_clicked = true;
         needDraw();
 
         uint8_t address = 0;
-        device_count = 0;
+        device_count    = 0;
         memset(addr_list, 0, sizeof(addr_list));
 
         // for (address = 1; address < 127; address++)
@@ -73,14 +66,11 @@ void func_i2c_t::update(bool btn_click)
 
         HAL::StartI2CScan();
         device_count = HAL::GetI2cScanResult()->size();
-        if (device_count > 6)
-            device_count = 6;
-        for (int i = 0; i < device_count; i++)
-            addr_list[i] = (*HAL::GetI2cScanResult())[i];
+        if (device_count > 6) device_count = 6;
+        for (int i = 0; i < device_count; i++) addr_list[i] = (*HAL::GetI2cScanResult())[i];
 
         _canvas->clear();
-        if (device_count == 0)
-        {
+        if (device_count == 0) {
             _canvas->setFont(&fonts::efontCN_24);
             _canvas->setTextSize(1);
             _canvas->setTextColor(TFT_RED);
@@ -91,12 +81,12 @@ void func_i2c_t::update(bool btn_click)
         std::string addr_buf;
         _canvas->setFont(&fonts::efontCN_16);
         draw_form();
-        for (size_t i = 0; i < device_count; i++)
-        {
+        for (size_t i = 0; i < device_count; i++) {
             // sprintf(addr_buf, "%d. 0x%02X", i + 1, addr_list[i]);
             addr_buf = fmt::format("{}. 0x{:02X}", i + 1, addr_list[i]);
 
-            _canvas->setTextColor((HAL::RandomInt(0, 255) << 16 | HAL::RandomInt(0, 255) << 8 | HAL::RandomInt(0, 255)));
+            _canvas->setTextColor(
+                (HAL::RandomInt(0, 255) << 16 | HAL::RandomInt(0, 255) << 8 | HAL::RandomInt(0, 255)));
             _canvas->drawCenterString(addr_buf.c_str(), (32 * i > 2 ? 1 : 0) + 32, (32 * (i % 3)) + 8);
         }
     }

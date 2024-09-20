@@ -1,47 +1,43 @@
-/**
- * @file app_template.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date <date></date>
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #pragma once
 #include <cstdint>
 #include <mooncake.h>
 
-namespace MOONCAKE
-{
-    namespace APPS
+namespace MOONCAKE {
+namespace APPS {
+/**
+ * @brief AppTemplate
+ *
+ */
+class AppTemplate : public APP_BASE {
+private:
+    struct Data_t {
+        std::uint32_t time_count = 0;
+    };
+    Data_t _data;
+
+public:
+    void onResume() override;
+    void onRunning() override;
+    void onDestroy() override;
+};
+
+class AppTemplate_Packer : public APP_PACKER_BASE {
+    const char* getAppName() override;
+    void* getAppIcon() override;
+    void* newApp() override
     {
-        /**
-         * @brief AppTemplate
-         *
-         */
-        class AppTemplate : public APP_BASE
-        {
-        private:
-            struct Data_t
-            {
-                std::uint32_t time_count = 0;
-            };
-            Data_t _data;
-
-        public:
-            void onResume() override;
-            void onRunning() override;
-            void onDestroy() override;
-        };
-
-        class AppTemplate_Packer : public APP_PACKER_BASE
-        {
-            const char* getAppName() override;
-            void* getAppIcon() override;
-            void* newApp() override { return new AppTemplate; }
-            void deleteApp(void* app) override { delete (AppTemplate*)app; }
-            void* getCustomData() override;
-        };
-    } // namespace APPS
-} // namespace MOONCAKE
+        return new AppTemplate;
+    }
+    void deleteApp(void* app) override
+    {
+        delete (AppTemplate*)app;
+    }
+    void* getCustomData() override;
+};
+}  // namespace APPS
+}  // namespace MOONCAKE

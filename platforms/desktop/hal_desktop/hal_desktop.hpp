@@ -1,13 +1,8 @@
-/**
- * @file hal_desktop.hpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-04-21
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #pragma once
 #include <cstdint>
 #include <mooncake.h>
@@ -27,8 +22,7 @@
 #include <lvgl.h>
 #include <ArduinoJson.h>
 
-class HAL_Desktop : public HAL
-{
+class HAL_Desktop : public HAL {
 private:
     int _screenWidth;
     int _screenHeight;
@@ -45,7 +39,7 @@ public:
 
     HAL_Desktop(int screenWidth = 240, int screenHeight = 240, bool factoryTest = false)
     {
-        _screenWidth = screenWidth;
+        _screenWidth  = screenWidth;
         _screenHeight = screenHeight;
         _factory_test = factoryTest;
     }
@@ -60,8 +54,7 @@ public:
         _data.canvas = new LGFX_SpriteFx(_data.display);
         _data.canvas->createSprite(_data.display->width(), _data.display->height());
 
-        if (_factory_test)
-        {
+        if (_factory_test) {
             _data.unit_oled = new LGFX(128, 64);
             _data.unit_oled->init();
             _data.unit_oled->setColorDepth(1);
@@ -75,7 +68,7 @@ public:
         // this->popSuccess("404 not found\nasdasd asdfasf");
         // this->popFatalError("404 not found\nasdasd asdfasf");
 
-        _data.config.wifiSsid = "114514";
+        _data.config.wifiSsid     = "114514";
         _data.config.wifiPassword = "1919810";
 
         // Add key mapping
@@ -87,7 +80,10 @@ public:
         // panel->addKeyCodeMapping(SDLK_f, 4);
     }
 
-    void canvasUpdate() override { GetCanvas()->pushSprite(0, 0); }
+    void canvasUpdate() override
+    {
+        GetCanvas()->pushSprite(0, 0);
+    }
 
     bool getButton(GAMEPAD::GamePadButton_t button) override
     {
@@ -104,7 +100,10 @@ public:
     /* -------------------------------------------------------------------------- */
     /*                                    Lvgl                                    */
     /* -------------------------------------------------------------------------- */
-    static uint32_t _lvgl_tick_cb() { return HAL::Millis(); }
+    static uint32_t _lvgl_tick_cb()
+    {
+        return HAL::Millis();
+    }
 
     static void _lvgl_disp_flush(lv_display_t* disp, const lv_area_t* area, uint8_t* px_map)
     {
@@ -131,9 +130,7 @@ public:
 
         // Display
         lv_display_t* display = lv_display_create(_data.canvas->width(), _data.canvas->height());
-        lv_display_set_buffers(display,
-                               _data.canvas->getBuffer(),
-                               NULL,
+        lv_display_set_buffers(display, _data.canvas->getBuffer(), NULL,
                                sizeof(uint16_t) * _data.canvas->width() * _data.canvas->height(),
                                LV_DISPLAY_RENDER_MODE_FULL);
         lv_display_set_flush_cb(display, _lvgl_disp_flush);
@@ -141,38 +138,36 @@ public:
         return true;
     }
 
-    void lvglTimerHandler() override { lv_timer_handler(); }
+    void lvglTimerHandler() override
+    {
+        lv_timer_handler();
+    }
 
     /* -------------------------------------------------------------------------- */
     /*                                   Encoder                                  */
     /* -------------------------------------------------------------------------- */
     // Simulate encoder by mouse drag
-    int encoder_count = 0;
+    int encoder_count      = 0;
     int last_encoder_count = 0;
-    int touch_start_x = 0;
-    int touch_last_x = 0;
-    bool is_touching = false;
+    int touch_start_x      = 0;
+    int touch_last_x       = 0;
+    bool is_touching       = false;
     int getEncoderCount() override
     {
-        if (isTouching())
-        {
-            if (!is_touching)
-            {
-                is_touching = true;
+        if (isTouching()) {
+            if (!is_touching) {
+                is_touching   = true;
                 touch_start_x = getTouchPoint().x;
                 return encoder_count;
             }
 
-            if (getTouchPoint().x != touch_last_x)
-            {
+            if (getTouchPoint().x != touch_last_x) {
                 // spdlog::info("{} {} {}", touch_start_x, getTouchPoint().x, encoder_count);
                 encoder_count = (getTouchPoint().x - touch_start_x) / 20 + last_encoder_count;
             }
             touch_last_x = getTouchPoint().x;
-        }
-        else if (is_touching)
-        {
-            is_touching = false;
+        } else if (is_touching) {
+            is_touching        = false;
             last_encoder_count = encoder_count;
         }
 
@@ -180,12 +175,14 @@ public:
         // return -encoder_count;
         // // return encoder_count;
 
-        if (_data.config.reverseEncoder)
-            return encoder_count;
+        if (_data.config.reverseEncoder) return encoder_count;
         return -encoder_count;
     }
 
-    void resetEncoderCount(int value) override { encoder_count = value; }
+    void resetEncoderCount(int value) override
+    {
+        encoder_count = value;
+    }
 
     bool isTouching() override
     {
@@ -220,8 +217,8 @@ public:
     OTA_UPGRADE::OtaInfo_t getLatestFirmwareInfoViaOta(OnLogPageRenderCallback_t onLogPageRender) override
     {
         OTA_UPGRADE::OtaInfo_t info;
-        info.firmwareUrl = "www.114514.com";
-        info.latestVersion = "V6.6.6";
+        info.firmwareUrl      = "www.114514.com";
+        info.latestVersion    = "V6.6.6";
         info.upgradeAvailable = true;
         return info;
     }
@@ -234,8 +231,7 @@ public:
         onLogPageRender(" upgrading..\n", true, false);
         delay(200);
 
-        for (int i = 0; i < 100; i += 5)
-        {
+        for (int i = 0; i < 100; i += 5) {
             std::string log = "<PB>";
             log += std::to_string(i);
             log += "\n";
@@ -250,12 +246,16 @@ public:
         return true;
     }
 
-    bool isWifiScanFinish() override { return true; }
+    bool isWifiScanFinish() override
+    {
+        return true;
+    }
 
     std::vector<NETWORK::WifiScanResult_t>* getWifiScanResult() override
     {
-        static std::vector<NETWORK::WifiScanResult_t> ret = {
-            {"asdasd", -20}, {"0a9fa09gy---sadf", -22}, {"0asd", -44}, {"0a337400", -66}, {"0a9fa09g...", -77}, {"~~~", -80}};
+        static std::vector<NETWORK::WifiScanResult_t> ret = {{"asdasd", -20},      {"0a9fa09gy---sadf", -22},
+                                                             {"0asd", -44},        {"0a337400", -66},
+                                                             {"0a9fa09g...", -77}, {"~~~", -80}};
         return &ret;
     }
 
@@ -309,19 +309,20 @@ public:
 
     void updateImuTiltBallOffset() override
     {
-
         // spdlog::info("{} {} {}", _data.imu_data.accelX, _data.imu_data.accelY, _data.imu_data.accelZ);
 
-        static float value_limit = 0.7;
-        static int offset_limit = 12;
+        static float value_limit        = 0.7;
+        static int offset_limit         = 12;
         static float tilt_offset_factor = (float)offset_limit / value_limit;
 
         _data.imu_data.tiltBallOffsetX = _data.imu_data.accelX * tilt_offset_factor;
         _data.imu_data.tiltBallOffsetY = _data.imu_data.accelY * tilt_offset_factor;
 
         // Limit
-        _data.imu_data.tiltBallOffsetX = SmoothUIToolKit::Clamp(_data.imu_data.tiltBallOffsetX, {-offset_limit, offset_limit});
-        _data.imu_data.tiltBallOffsetY = SmoothUIToolKit::Clamp(_data.imu_data.tiltBallOffsetY, {-offset_limit, offset_limit});
+        _data.imu_data.tiltBallOffsetX =
+            SmoothUIToolKit::Clamp(_data.imu_data.tiltBallOffsetX, {-offset_limit, offset_limit});
+        _data.imu_data.tiltBallOffsetY =
+            SmoothUIToolKit::Clamp(_data.imu_data.tiltBallOffsetY, {-offset_limit, offset_limit});
 
         // spdlog::info("{} {}", _data.imu_data.tiltBallOffsetX, _data.imu_data.tiltBallOffsetY);
     }
@@ -339,23 +340,15 @@ public:
         static uint32_t time_count = HAL::Millis();
         static float roll, pitch, yaw = 0.0f;
 
-        if (HAL::Millis() - time_count > 200)
-        {
+        if (HAL::Millis() - time_count > 200) {
             time_count = HAL::Millis();
-            yaw = 0.0f;
+            yaw        = 0.0f;
             return;
         }
 
-        calculateAttitudeAngles(_data.imu_data.accelX,
-                                _data.imu_data.accelY,
-                                _data.imu_data.accelZ,
-                                _data.imu_data.gyroX,
-                                _data.imu_data.gyroX,
-                                _data.imu_data.gyroZ,
-                                HAL::Millis() - time_count,
-                                roll,
-                                pitch,
-                                yaw);
+        calculateAttitudeAngles(_data.imu_data.accelX, _data.imu_data.accelY, _data.imu_data.accelZ,
+                                _data.imu_data.gyroX, _data.imu_data.gyroX, _data.imu_data.gyroZ,
+                                HAL::Millis() - time_count, roll, pitch, yaw);
         // spdlog::info("get yaw: {}", yaw);
 
         _data.imu_data.dialAngle = yaw / 100;
@@ -369,34 +362,24 @@ public:
 
         float xyHeading = atan2(magX, magY);
         float zxHeading = atan2(magZ, magX);
-        float heading = xyHeading;
+        float heading   = xyHeading;
 
         // Limit
-        if (heading < 0)
-            heading += 2 * M_PI;
-        if (heading > 2 * M_PI)
-            heading -= 2 * M_PI;
+        if (heading < 0) heading += 2 * M_PI;
+        if (heading > 2 * M_PI) heading -= 2 * M_PI;
 
         return (heading * 180 / M_PI);
     }
 
-    void calculateAttitudeAngles(float accelX,
-                                 float accelY,
-                                 float accelZ,
-                                 float gyroX,
-                                 float gyroY,
-                                 float gyroZ,
-                                 float deltaTime,
-                                 float& roll,
-                                 float& pitch,
-                                 float& yaw)
+    void calculateAttitudeAngles(float accelX, float accelY, float accelZ, float gyroX, float gyroY, float gyroZ,
+                                 float deltaTime, float& roll, float& pitch, float& yaw)
     {
         // 计算滚转角（Roll）和俯仰角（Pitch）
-        roll = atan2f(accelY, accelZ) * (180.0f / M_PI);
+        roll  = atan2f(accelY, accelZ) * (180.0f / M_PI);
         pitch = atan2f(-accelX, sqrtf(accelY * accelY + accelZ * accelZ)) * (180.0f / M_PI);
 
         // 计算偏航角（Yaw），假设此处使用陀螺仪积分
-        yaw += gyroZ * deltaTime; // 偏航角通过积分陀螺仪的角速度来估计
+        yaw += gyroZ * deltaTime;  // 偏航角通过积分陀螺仪的角速度来估计
     }
 
     void startImuMagCalibration(uint32_t duration = 10000) override
@@ -412,10 +395,8 @@ public:
 
         uint32_t time_count = millis();
 
-        while (1)
-        {
-            if (millis() - time_count > duration)
-                break;
+        while (1) {
+            if (millis() - time_count > duration) break;
 
             updateImuData();
 
@@ -445,7 +426,7 @@ public:
         _data.imu_data.magYOffset = (value_y_max + value_y_min) / 2.0f;
         _data.imu_data.magZOffset = (value_z_max + value_z_min) / 2.0f;
 
-        spdlog::info(
-            "get mag offset: {} {} {}", _data.imu_data.magXOffset, _data.imu_data.magYOffset, _data.imu_data.magZOffset);
+        spdlog::info("get mag offset: {} {} {}", _data.imu_data.magXOffset, _data.imu_data.magYOffset,
+                     _data.imu_data.magZOffset);
     }
 };

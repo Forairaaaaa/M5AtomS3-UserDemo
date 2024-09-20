@@ -1,12 +1,7 @@
-/**
- * @file i2c.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-08-05
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "../view.h"
 #include <mooncake.h>
@@ -26,7 +21,7 @@ extern lv_image_dsc_t ui_img_imu_dial_png;
 extern lv_image_dsc_t ui_img_imu_tilt_ball_png;
 
 static lv_obj_t* _lv_img_tilt_ball = nullptr;
-static lv_obj_t* _lv_img_dial = nullptr;
+static lv_obj_t* _lv_img_dial      = nullptr;
 
 void func_imu_t::start()
 {
@@ -44,10 +39,10 @@ void func_imu_t::start()
     lv_obj_t* img_buffer = nullptr;
 
     // Dial
-    ui_img_imu_dial_png.data = AssetPool::GetImage().AppUserDemo.imu_dial;
+    ui_img_imu_dial_png.data      = AssetPool::GetImage().AppUserDemo.imu_dial;
     ui_img_imu_dial_png.data_size = sizeof(AssetPool::GetImage().AppUserDemo.imu_dial);
 
-    img_buffer = lv_image_create(lv_screen_active());
+    img_buffer   = lv_image_create(lv_screen_active());
     _lv_img_dial = img_buffer;
     lv_image_set_src(img_buffer, &ui_img_imu_dial_png);
     lv_obj_align(img_buffer, LV_ALIGN_CENTER, 0, 0);
@@ -57,10 +52,10 @@ void func_imu_t::start()
     lv_obj_remove_flag(img_buffer, LV_OBJ_FLAG_SCROLLABLE);
 
     // Tilt ball
-    ui_img_imu_tilt_ball_png.data = AssetPool::GetImage().AppUserDemo.imu_tilt_ball;
+    ui_img_imu_tilt_ball_png.data      = AssetPool::GetImage().AppUserDemo.imu_tilt_ball;
     ui_img_imu_tilt_ball_png.data_size = sizeof(AssetPool::GetImage().AppUserDemo.imu_tilt_ball);
 
-    img_buffer = lv_image_create(lv_screen_active());
+    img_buffer        = lv_image_create(lv_screen_active());
     _lv_img_tilt_ball = img_buffer;
     lv_image_set_src(img_buffer, &ui_img_imu_tilt_ball_png);
     lv_obj_align(img_buffer, LV_ALIGN_CENTER, 0, 0);
@@ -70,7 +65,7 @@ void func_imu_t::start()
     lv_obj_remove_flag(img_buffer, LV_OBJ_FLAG_SCROLLABLE);
 
     // Cross mark
-    ui_img_imu_cross_mark_png.data = AssetPool::GetImage().AppUserDemo.imu_cross_mark;
+    ui_img_imu_cross_mark_png.data      = AssetPool::GetImage().AppUserDemo.imu_cross_mark;
     ui_img_imu_cross_mark_png.data_size = sizeof(AssetPool::GetImage().AppUserDemo.imu_cross_mark);
 
     img_buffer = lv_image_create(lv_screen_active());
@@ -93,7 +88,8 @@ void func_imu_t::update(bool btn_click)
 
     /* -------------------------------- Directly -------------------------------- */
     // Tilt ball
-    lv_obj_align(_lv_img_tilt_ball, LV_ALIGN_CENTER, HAL::GetImuData().tiltBallOffsetX, HAL::GetImuData().tiltBallOffsetY);
+    lv_obj_align(_lv_img_tilt_ball, LV_ALIGN_CENTER, HAL::GetImuData().tiltBallOffsetX,
+                 HAL::GetImuData().tiltBallOffsetY);
     // Dial
     lv_image_set_rotation(_lv_img_dial, HAL::GetImuData().dialAngle);
 

@@ -1,12 +1,7 @@
-/**
- * @file app.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-04-21
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "app.h"
 #include "apps/apps.h"
@@ -38,8 +33,7 @@ void APP::Setup(SetupCallback_t callback)
     spdlog::info("shared data injection:");
     if (callback.sharedDataInjection != nullptr)
         callback.sharedDataInjection();
-    else
-    {
+    else {
         spdlog::info("empty callback, inject type base");
         SharedData::Inject(new SharedData);
     }
@@ -54,8 +48,7 @@ void APP::Setup(SetupCallback_t callback)
         spdlog::warn("empty callback");
 
     // Lvgl init
-    if (HAL::Check())
-        HAL::LvglInit();
+    if (HAL::Check()) HAL::LvglInit();
 
     /* -------------------------------------------------------------------------- */
     /*                                Mooncake apps                               */

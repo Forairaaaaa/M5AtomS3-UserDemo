@@ -1,12 +1,7 @@
-/**
- * @file inputs.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2023-11-18
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2023
- *
+ * SPDX-License-Identifier: MIT
  */
 #pragma once
 #include "button/button.h"

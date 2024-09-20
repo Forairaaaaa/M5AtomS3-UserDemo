@@ -1,12 +1,7 @@
-/**
- * @file app_user_demo.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-08-05
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "app_user_demo.h"
 #include "../../hal/hal.h"
@@ -50,29 +45,23 @@ void AppUserDemo::onRunning()
 
     int btn_state = Button::A()->wasHold() ? 1 : Button::A()->wasClicked() ? 2 : 0;
 
-    if ((btn_state == 2) && !_data.is_entry_func)
-    {
+    if ((btn_state == 2) && !_data.is_entry_func) {
         // next function
         _data.func_index = (VIEW::func_index_t)(_data.func_index + 1);
-        if (_data.func_index == VIEW::FUNC_MAX)
-        {
+        if (_data.func_index == VIEW::FUNC_MAX) {
             _data.func_index = VIEW::FUNC_WIFI_SCAN;
         }
         HAL::GetDisplay()->drawPng(_data.func_img_list[_data.func_index], ~0u, 0, 0);
     }
 
-    if (btn_state == 1)
-    {
-        if (!_data.is_entry_func)
-        {
+    if (btn_state == 1) {
+        if (!_data.is_entry_func) {
             _data.is_entry_func = true;
             // USBSerial.printf("Entry function <%s>\r\n",
             //                  func_name_text[func_index]);
             // entry function
             _data.func_list[_data.func_index]->entry(HAL::GetCanvas());
-        }
-        else
-        {
+        } else {
             _data.is_entry_func = false;
 
             // leave function
@@ -81,13 +70,10 @@ void AppUserDemo::onRunning()
         }
     }
 
-    if (_data.is_entry_func)
-    {
+    if (_data.is_entry_func) {
         _data.func_list[_data.func_index]->update(btn_state == 2 ? true : false);
         _data.func_list[_data.func_index]->draw();
-    }
-    else
-    {
+    } else {
         HAL::Delay(10);
     }
 
@@ -98,6 +84,5 @@ void AppUserDemo::onDestroy()
 {
     spdlog::info("{} onDestroy", getAppName());
 
-    for (auto& i : _data.func_list)
-        delete i;
+    for (auto& i : _data.func_list) delete i;
 }

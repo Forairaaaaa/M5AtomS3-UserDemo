@@ -1,12 +1,7 @@
-/**
- * @file i2c.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-08-05
+/*
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
  *
- * @copyright Copyright (c) 2024
- *
+ * SPDX-License-Identifier: MIT
  */
 #include "../view.h"
 #include <hal/hal.h>
@@ -37,21 +32,16 @@ void func_pwm_t::start()
 
 void func_pwm_t::update(bool btn_click)
 {
-    if (btn_click)
-    {
+    if (btn_click) {
         pwm_mode_index++;
-        if (pwm_mode_index > 3)
-        {
+        if (pwm_mode_index > 3) {
             pwm_mode_index = 0;
         }
         HAL::GetDisplay()->drawPng(pwm_img_list[pwm_mode_index], ~0u, 0, 0);
         HAL::GetDisplay()->drawCenterString("F: 1Khz", 90, 52);
-        if (pwm_mode_index != 0)
-        {
+        if (pwm_mode_index != 0) {
             pwm_duty = 0;
-        }
-        else
-        {
+        } else {
             pwm_duty = 0xF;
         }
 
