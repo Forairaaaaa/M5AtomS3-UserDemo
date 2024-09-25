@@ -1,0 +1,42 @@
+[
+    {
+        "url": "https://github.com/Forairaaaaa/mooncake.git",
+        "path": "dependencies/mooncake",
+        "branch": "main"
+    },
+    {
+        "url": "https://github.com/Forairaaaaa/smooth_ui_toolkit.git",
+        "path": "dependencies/smooth_ui_toolkit",
+        "branch": "main"
+    },
+    {
+        "url": "https://github.com/Forairaaaaa/M5GFX.git",
+        "path": "dependencies/M5GFX",
+        "branch": "0.1.16-with-arduino-as-component"
+    },
+    {
+        "url": "https://github.com/m5stack/M5Unified.git",
+        "path": "dependencies/M5Unified",
+        "branch": "0.1.16"
+    },
+    {
+        "url": "https://github.com/Forairaaaaa/arduino_lite.git",
+        "path": "dependencies/arduino-esp32",
+        "branch": "v3.0.2"
+    },
+    {
+        "url": "https://github.com/lvgl/lvgl.git",
+        "path": "dependencies/lvgl",
+        "branch": "v9.1.0"
+    },
+    {
+        "url": "https://github.com/bblanchon/ArduinoJson.git",
+        "path": "dependencies/ArduinoJson",
+        "branch": "v7.1.0"
+    },
+    {
+        "url": "https://github.com/hathach/tinyusb.git",
+        "path": "dependencies/arduino_tinyusb/tinyusb",
+        "branch": "0.17.0"
+    }
+]
